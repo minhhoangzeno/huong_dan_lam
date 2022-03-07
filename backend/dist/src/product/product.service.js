@@ -25,7 +25,7 @@ let ProductService = class ProductService {
         this.categoryModel = categoryModel;
     }
     async findAll() {
-        return this.productModel.find();
+        return this.productModel.find().populate("category", "title", "Category");
     }
     async create(productDto, photoURL) {
         let product = new this.productModel(Object.assign(Object.assign({}, productDto), { photoURL }));
@@ -33,6 +33,31 @@ let ProductService = class ProductService {
         category.products.push(product._id);
         category.save();
         return product.save();
+    }
+    async update(id, productDto, photoURL) {
+        let product = await this.productModel.findById(id.toString());
+        if (photoURL) {
+            product.title = productDto.title;
+            product.price = productDto.price;
+            product.content = productDto.content;
+            product.note = productDto.note;
+            product.category = productDto.category;
+            product.animate = productDto.animate;
+            product.photoURL = photoURL;
+        }
+        else {
+            product.title = productDto.title;
+            product.price = productDto.price;
+            product.content = productDto.content;
+            product.note = productDto.note;
+            product.category = productDto.category;
+            product.animate = productDto.animate;
+        }
+        return product.save();
+    }
+    async delete(id) {
+        let product = await this.productModel.findById(id.toString());
+        return product.remove();
     }
 };
 ProductService = __decorate([

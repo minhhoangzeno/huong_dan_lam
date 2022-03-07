@@ -29,6 +29,9 @@ export class Order {
     @Prop()
     note: string;
 
+    @Prop({ default: 'Pending' })
+    status: string;
+
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
     user: User;
 

@@ -12,7 +12,7 @@ export class ProductService {
     ) { }
 
     async findAll(): Promise<Product[]> {
-        return this.productModel.find();
+        return this.productModel.find().populate("category", "title", "Category");
     }
 
     async create(productDto: ProductDto, photoURL: string): Promise<Product> {
@@ -21,6 +21,31 @@ export class ProductService {
         category.products.push(product._id);
         category.save();
         return product.save();
+    }
+
+    async update(id, productDto: ProductDto, photoURL?: string): Promise<Product> {
+        let product = await this.productModel.findById(id.toString());
+        if (photoURL) {
+            product.title = productDto.title;
+            product.price = productDto.price;
+            product.content = productDto.content;
+            product.note = productDto.note;
+            product.category = productDto.category;
+            product.animate = productDto.animate;
+            product.photoURL = photoURL;
+        } else {
+            product.title = productDto.title;
+            product.price = productDto.price;
+            product.content = productDto.content;
+            product.note = productDto.note;
+            product.category = productDto.category;
+            product.animate = productDto.animate;
+        }
+        return product.save();
+    }
+    async delete(id) {
+        let product = await this.productModel.findById(id.toString());
+        return product.remove();
     }
 
 

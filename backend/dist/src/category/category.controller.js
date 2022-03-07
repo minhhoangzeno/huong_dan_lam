@@ -48,7 +48,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CategoryController.prototype, "create", null);
 __decorate([
-    (0, common_1.Post)('update/:id'),
+    (0, common_1.Post)('edit/:id'),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
@@ -56,7 +56,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CategoryController.prototype, "update", null);
 __decorate([
-    (0, common_1.Post)('delete/:id'),
+    (0, common_1.Delete)('delete/:id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

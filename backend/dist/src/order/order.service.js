@@ -41,6 +41,21 @@ let OrderService = class OrderService {
         });
         return orderSave.save();
     }
+    async update(id, orderDto) {
+        let order = await this.orderModel.findById(id.toString());
+        order.fullName = orderDto.fullName;
+        order.phoneNumber = orderDto.phoneNumber;
+        order.email = orderDto.email;
+        order.address = orderDto.address;
+        order.note = orderDto.note;
+        order.price = orderDto.price;
+        order.status = orderDto.status;
+        return order.save();
+    }
+    async delete(id) {
+        let order = await this.orderModel.findById(id.toString());
+        return order.remove();
+    }
 };
 OrderService = __decorate([
     (0, common_1.Injectable)(),

@@ -9,4 +9,6 @@ export declare class OrderService {
     findAll(): unknown;
     findById(id: any): unknown;
     create(orderDto: OrderDto, orders: any, user: any): unknown;
+    update(id: any, orderDto: any): unknown;
+    delete(id: any): unknown;
 }

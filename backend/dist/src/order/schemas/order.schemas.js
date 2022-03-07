@@ -45,6 +45,10 @@ __decorate([
     __metadata("design:type", String)
 ], Order.prototype, "note", void 0);
 __decorate([
+    (0, mongoose_1.Prop)({ default: 'Pending' }),
+    __metadata("design:type", String)
+], Order.prototype, "status", void 0);
+__decorate([
     (0, mongoose_1.Prop)({ type: mongoose.Schema.Types.ObjectId, ref: 'User' }),
     __metadata("design:type", user_schemas_1.User)
 ], Order.prototype, "user", void 0);

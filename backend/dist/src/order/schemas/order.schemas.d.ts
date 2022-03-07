@@ -11,6 +11,7 @@ export declare class Order {
     address: string;
     price: Number;
     note: string;
+    status: string;
     user: User;
     orders: OrderItem[];
     createdAt: Date;
