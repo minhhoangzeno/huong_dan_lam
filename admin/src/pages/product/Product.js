@@ -2,28 +2,47 @@ import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faEdit, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button, ButtonGroup, Card, Dropdown, Table, Container, Row , Col} from '@themesberg/react-bootstrap';
-import React, { useEffect } from 'react';
+import { Button, ButtonGroup, Card, Dropdown, Table, Container, Row, Col } from '@themesberg/react-bootstrap';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
 import { SERVER } from '../../apis/API';
+import { getCategoryThunk } from '../../redux/categorySlice';
 import { deleteProductThunk, getProductThunk } from '../../redux/productSlice';
 import { Routes } from "../../routes";
 
 export default () => {
     let history = useHistory();
-    let product = useSelector(state => state.product.data);
+    const [categoryId, setCategoryId] = useState();
+    let category = useSelector(state => state.category.data);
+    const [product, setProduct] = useState([]);
     let { addToast } = useToasts()
     let dispatch = useDispatch();
+    const searchProduct = async () => {
+        if (categoryId) {
+            let data = await dispatch(getProductThunk(categoryId));
+            setProduct(data);
+        }
+    }
     useEffect(() => {
-        dispatch(getProductThunk()) // eslint-disable-next-line react-hooks/exhaustive-deps
+        searchProduct() // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [categoryId])
+    const searchCategory = async () => {
+        let resp = await dispatch(getCategoryThunk())
+        setCategoryId(resp[0]?._id)
+    }
+    useEffect(() => {
+        searchCategory() // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
     let deleteProduct = async (productId) => {
         await dispatch(deleteProductThunk(productId));
-        dispatch(getProductThunk());
         addToast("Delete Success", { appearance: 'success', autoDismiss: 1000 })
+        searchProduct()
+        // if (resp) {
+        //     await dispatch(searchProduct());
+        //     addToast("Delete Success", { appearance: 'success', autoDismiss: 1000 })
+        // }
     }
 
     let routerEditProduct = (data) => {
@@ -32,20 +51,27 @@ export default () => {
             state: data
         })
     }
-
     let routerDetailProduct = (data) => {
         history.push({
             pathname: Routes.ProductDetail.path,
             state: data
         })
     }
-
     return (
         <>
             <Container>
                 <Row className="mb-4" >
                     <Col>
                         <Button variant="warning" onClick={() => history.push(Routes.ProductAdd.path)} >Add</Button>
+                    </Col>
+                </Row>
+                <Row className="mb-4" >
+                    <Col>
+                        <select onChange={e => setCategoryId(e.target.value)}  >
+                            {category?.map((item, index) => {
+                                return <option key={index} value={item?._id} >{item.title}</option>
+                            })}
+                        </select>
                     </Col>
                 </Row>
                 <Row>
@@ -56,7 +82,7 @@ export default () => {
                                     <tr>
                                         <th className="border-bottom">#</th>
                                         <th className="border-bottom">Title</th>
-                                        <th className="border-bottom">Price (VNĐ)</th>
+                                        <th className="border-bottom">Giá</th>
                                         <th className="border-bottom">Image</th>
                                         <th className="border-bottom">Settings</th>
                                     </tr>
@@ -64,34 +90,13 @@ export default () => {
                                 <tbody>
                                     {product && product.map((productItem, index) => {
                                         return (
-                                            <TableItem index={index + 1} product={productItem} key={index}
-                                             routerEditProduct={routerEditProduct} deleteProduct={deleteProduct}
-                                             routerDetailProduct={routerDetailProduct}
-                                             />
+                                            <TableItem index={index + 1} product={productItem} key={index} routerEditProduct={routerEditProduct} deleteProduct={deleteProduct}
+                                                routerDetailProduct={routerDetailProduct}
+                                            />
                                         )
                                     })}
                                 </tbody>
                             </Table>
-                            {/* <Card.Footer className="px-3 border-0 d-lg-flex align-items-center justify-content-between">
-                        <Nav>
-                            <Pagination className="mb-2 mb-lg-0">
-                                <Pagination.Prev>
-                                    Previous
-                                </Pagination.Prev>
-                                <Pagination.Item active>1</Pagination.Item>
-                                <Pagination.Item>2</Pagination.Item>
-                                <Pagination.Item>3</Pagination.Item>
-                                <Pagination.Item>4</Pagination.Item>
-                                <Pagination.Item>5</Pagination.Item>
-                                <Pagination.Next>
-                                    Next
-                                </Pagination.Next>
-                            </Pagination>
-                        </Nav>
-                        <small className="fw-bold">
-                            Showing <b>{totalTransactions}</b> out of <b>25</b> entries
-                        </small>
-                    </Card.Footer> */}
                         </Card.Body>
                     </Card>
                 </Row>
@@ -101,7 +106,7 @@ export default () => {
 }
 
 
-function TableItem({ index, product, routerEditProduct, deleteProduct,routerDetailProduct }) {
+function TableItem({ index, product, routerEditProduct, deleteProduct, routerDetailProduct }) {
     return (
         <>
             <tr>
@@ -121,7 +126,7 @@ function TableItem({ index, product, routerEditProduct, deleteProduct,routerDeta
                             </span>
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                        <Dropdown.Item onClick={() => routerDetailProduct(product)} >
+                            <Dropdown.Item onClick={() => routerDetailProduct(product)}  >
                                 <FontAwesomeIcon icon={faEye} className="me-2" /> View Details
                             </Dropdown.Item>
                             <Dropdown.Item onClick={() => routerEditProduct(product)} >

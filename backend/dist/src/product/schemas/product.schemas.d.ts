@@ -4,13 +4,13 @@ import { Category } from 'src/category/schemas/category.schemas';
 export declare type ProductDocument = Product & Document;
 export declare class Product {
     id: mongoose.Schema.Types.ObjectId;
-    title: string;
-    price: string;
-    content: string;
-    note: string;
-    animate: string;
-    photoURL: string;
+    title: String;
     category: Category;
+    price: Number;
+    content: String;
+    warn: String;
+    animate: String;
+    photoURL: String;
     createdAt: Date;
 }
 export declare const ProductSchema: mongoose.Schema<Document<Product, any, any>, mongoose.Model<Document<Product, any, any>, any, any, any>, any, any>;

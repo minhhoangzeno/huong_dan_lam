@@ -13,29 +13,27 @@ const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const auth_module_1 = require("./auth/auth.module");
 const blog_module_1 = require("./blog/blog.module");
-const category_module_1 = require("./category/category.module");
 const comment_module_1 = require("./comment/comment.module");
-const product_module_1 = require("./product/product.module");
-const reply_module_1 = require("./reply/reply.module");
 const user_module_1 = require("./user/user.module");
-const video_module_1 = require("./video/video.module");
+const feedback_module_1 = require("./feedback/feedback.module");
+const category_module_1 = require("./category/category.module");
+const product_module_1 = require("./product/product.module");
 const order_module_1 = require("./order/order.module");
-const order_item_module_1 = require("./order-item/order-item.module");
+const order_product_module_1 = require("./order-product/order-product.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [user_module_1.UserModule,
-            mongoose_1.MongooseModule.forRoot('mongodb://localhost/tuyet'),
+            mongoose_1.MongooseModule.forRoot('mongodb://localhost/anhtuyet'),
             auth_module_1.AuthModule,
             blog_module_1.BlogModule,
-            video_module_1.VideoModule,
+            comment_module_1.CommentModule,
+            feedback_module_1.FeedbackModule,
             category_module_1.CategoryModule,
             product_module_1.ProductModule,
-            comment_module_1.CommentModule,
-            reply_module_1.ReplyModule,
             order_module_1.OrderModule,
-            order_item_module_1.OrderItemModule
+            order_product_module_1.OrderProductModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

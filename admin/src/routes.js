@@ -55,6 +55,18 @@ export const Routes = {
     ProductEdit: { path: "/product/edit" },
     ProductDetail: { path: "/product/detail" },
 
+    Countdown: { path: "/countdown" },
+    CountdownAdd: { path: "/countdown/add" },
+    CountdownDetail: { path: "/countdown/detail" },
+    CountdownEdit: { path: "/countdown/edit" },
+
+    Fee: { path: "/fee" },
+    FeeAdd: { path: "/fee/add" },
+    FeeDetail: { path: "/fee/detail" },
+
+    Feedback: { path: "/feedback" },
+    User: { path: "/user" },
+
     Category: { path: "/category" },
     CategoryAdd: { path: "/category/add" },
     CategoryDetail: { path: "/category/detail" },
@@ -62,5 +74,5 @@ export const Routes = {
 
     Order: { path: "/order" },
     OrderDetail: { path: "/order/detail" },
-    OrderEdit: { path: "/order/edit" },
+
 };

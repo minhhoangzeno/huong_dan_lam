@@ -8,7 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var _a, _b, _c, _d, _e;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderSchema = exports.Order = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
@@ -18,47 +17,75 @@ let Order = class Order {
 };
 __decorate([
     (0, mongoose_1.Prop)(),
-    __metadata("design:type", typeof (_c = typeof mongoose !== "undefined" && (_a = mongoose.Schema) !== void 0 && (_b = _a.Types) !== void 0 && _b.ObjectId) === "function" ? _c : Object)
+    __metadata("design:type", mongoose.Schema.Types.ObjectId)
 ], Order.prototype, "id", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ required: true }),
-    __metadata("design:type", String)
-], Order.prototype, "fullName", void 0);
+    (0, mongoose_1.Prop)({
+        type: {
+            fullName: { type: String }, phoneNumber: { type: String },
+            email: { type: String },
+            city: { type: String },
+            district: { type: String },
+            address: { type: String },
+        }
+    }),
+    __metadata("design:type", Object)
+], Order.prototype, "peopleSend", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ required: true }),
-    __metadata("design:type", String)
-], Order.prototype, "phoneNumber", void 0);
+    (0, mongoose_1.Prop)({
+        type: {
+            fullName: { type: String }, phoneNumber: { type: String },
+            city: { type: String },
+            email: { type: String },
+            district: { type: String },
+            address: { type: String },
+        }
+    }),
+    __metadata("design:type", Object)
+], Order.prototype, "peopleRecieve", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ required: true }),
-    __metadata("design:type", String)
-], Order.prototype, "email", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ required: true }),
-    __metadata("design:type", String)
-], Order.prototype, "address", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ required: true }),
-    __metadata("design:type", typeof (_d = typeof Number !== "undefined" && Number) === "function" ? _d : Object)
-], Order.prototype, "price", void 0);
+    (0, mongoose_1.Prop)({ type: mongoose.Schema.Types.ObjectId }),
+    __metadata("design:type", user_schemas_1.User)
+], Order.prototype, "createdBy", void 0);
 __decorate([
     (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
-], Order.prototype, "note", void 0);
+], Order.prototype, "code", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ default: 'Pending' }),
+    (0, mongoose_1.Prop)({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'OrderProduct' }] }),
+    __metadata("design:type", Array)
+], Order.prototype, "orderProducts", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({
+        type: {
+            year: { type: String }, month: { type: String },
+            day: { type: String },
+            hour: { type: String }
+        }
+    }),
+    __metadata("design:type", Object)
+], Order.prototype, "time", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({
+        type: {
+            titleSend: { type: String }, occasion: { type: String },
+            noteSendToPersonReceive: { type: String },
+            noteSendToPersonAdmin: { type: String }
+        }
+    }),
+    __metadata("design:type", Object)
+], Order.prototype, "message", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", Number)
+], Order.prototype, "totalPrice", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ default: "Pending" }),
     __metadata("design:type", String)
 ], Order.prototype, "status", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: mongoose.Schema.Types.ObjectId, ref: 'User' }),
-    __metadata("design:type", user_schemas_1.User)
-], Order.prototype, "user", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'OrderItem' }] }),
-    __metadata("design:type", Array)
-], Order.prototype, "orders", void 0);
-__decorate([
     (0, mongoose_1.Prop)({ default: new Date() }),
-    __metadata("design:type", typeof (_e = typeof Date !== "undefined" && Date) === "function" ? _e : Object)
+    __metadata("design:type", Date)
 ], Order.prototype, "createdAt", void 0);
 Order = __decorate([
     (0, mongoose_1.Schema)()

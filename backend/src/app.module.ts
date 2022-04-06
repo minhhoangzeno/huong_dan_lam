@@ -4,27 +4,26 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { BlogModule } from './blog/blog.module';
-import { CategoryModule } from './category/category.module';
 import { CommentModule } from './comment/comment.module';
-import { ProductModule } from './product/product.module';
-import { ReplyModule } from './reply/reply.module';
 import { UserModule } from './user/user.module';
-import { VideoModule } from './video/video.module';
+import { FeedbackModule } from './feedback/feedback.module';
+import { CategoryModule } from './category/category.module';
+import { ProductModule } from './product/product.module';
 import { OrderModule } from './order/order.module';
-import { OrderItemModule } from './order-item/order-item.module';
+import { OrderProductModule } from './order-product/order-product.module';
+
 
 @Module({
   imports: [UserModule,
-    MongooseModule.forRoot('mongodb://localhost/tuyet'),
+    MongooseModule.forRoot('mongodb://localhost/anhtuyet'),
     AuthModule,
     BlogModule,
-    VideoModule,
+    CommentModule,
+    FeedbackModule,
     CategoryModule,
     ProductModule,
-    CommentModule,
-    ReplyModule,
     OrderModule,
-    OrderItemModule
+    OrderProductModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,41 +1,42 @@
 import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button, Container, Form, InputGroup, Row, Dropdown } from '@themesberg/react-bootstrap';
+import { Button, Container, Form, InputGroup, Row } from '@themesberg/react-bootstrap';
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from "react-hook-form";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
 import { getCategoryThunk } from '../../redux/categorySlice';
 import { addProductThunk } from '../../redux/productSlice';
 import { Routes } from '../../routes';
+import { Editor } from '@tinymce/tinymce-react';
+import { tinyConfig } from '../../TiniConfigure';
 
 export default () => {
     const [file, setFile] = useState();
     const { control, handleSubmit, formState: { errors } } = useForm();
     let { addToast } = useToasts();
-    const [categories, setCategories] = useState([]);
-    const [category, setCategory] = useState();
-    let dispatch = useDispatch();
-    let search = async () => {
-        let data = await dispatch(getCategoryThunk());
-        if (data) {
-            setCategories(data);
-            setCategory(data[0]);
+    let category = useSelector(state => state.category.data);
+    const [categoryId, setCategoryId] = useState();
+    const search = async () => {
+        let resp = await dispatch(getCategoryThunk())
+        if (resp) {
+            setCategoryId(resp[0]?._id)
         }
     }
     useEffect(() => {
         search() // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-    let history = useHistory()
+    }, []);
+    let history = useHistory();
+    let dispatch = useDispatch();
     let addData = async (form) => {
         let data = new FormData();
         data.append("title", form.title);
         data.append("price", form.price);
-        data.append("category", category?._id);
         data.append("content", form.content);
-        data.append("note", form.note);
+        data.append("warn", form.warn);
         data.append("animate", form.animate);
+        data.append("category", categoryId);
         if (file) {
             data.append("file", file);
         }
@@ -51,7 +52,7 @@ export default () => {
                 <h3 className="mb-3">Add Product</h3>
                 <Form>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Title</Form.Label>
+                        <Form.Label>Tiêu đề</Form.Label>
                         <Controller
                             control={control}
                             name="title"
@@ -70,22 +71,15 @@ export default () => {
                         />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Category</Form.Label>
-                        <Dropdown>
-                            <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                {category?.title}
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                                {categories.map((item, index) => {
-                                    return (
-                                        <Dropdown.Item key={index} onClick={() => setCategory(item)} >{item?.title}</Dropdown.Item>
-                                    )
-                                })}
-                            </Dropdown.Menu>
-                        </Dropdown>
+                        <Form.Label>Danh mục</Form.Label>
+                        <select onChange={e => setCategoryId(e.target.value)}  >
+                            {category?.map((item, index) => {
+                                return <option key={index} value={item?._id} >{item.title}</option>
+                            })}
+                        </select>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Price</Form.Label>
+                        <Form.Label>Giá</Form.Label>
                         <Controller
                             control={control}
                             name="price"
@@ -104,60 +98,63 @@ export default () => {
                         />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Content</Form.Label>
+                        <Form.Label>Nội dung</Form.Label>
                         <Controller
                             control={control}
+                            render={({ field: { onChange, onBlur, value } }) => (
+                                <Editor apiKey="g8rgmljyc6ryhlggucq6jeqipl6tn5rnqym45lkfm235599i"
+                                    init={tinyConfig}
+                                    onEditorChange={(event) => {
+                                        onChange(event)
+                                    }}
+                                    onBlur={onBlur}
+                                    value={value}
+
+                                />
+                            )}
                             name="content"
-                            render={({
-                                field: { onChange, onBlur, value }
-                            }) => (
-                                <InputGroup style={{ border: errors.title?.type === "required" && '1px solid red' }}>
-                                    <Form.Control autoFocus required type="text" onChange={e => onChange(e.target.value)}
-                                        onBlur={onBlur}
-                                    />
-                                </InputGroup>
-                            )}
-                            rules={{
-                                required: true
-                            }}
+                            defaultValue=""
+                            rules={{ required: true }}
                         />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Note</Form.Label>
+                        <Form.Label>Lưu ý</Form.Label>
                         <Controller
                             control={control}
-                            name="note"
-                            render={({
-                                field: { onChange, onBlur, value }
-                            }) => (
-                                <InputGroup style={{ border: errors.title?.type === "required" && '1px solid red' }}>
-                                    <Form.Control autoFocus required type="text" onChange={e => onChange(e.target.value)}
-                                        onBlur={onBlur}
-                                    />
-                                </InputGroup>
+                            render={({ field: { onChange, onBlur, value } }) => (
+                                <Editor apiKey="g8rgmljyc6ryhlggucq6jeqipl6tn5rnqym45lkfm235599i"
+                                    init={tinyConfig}
+                                    onEditorChange={(event) => {
+                                        onChange(event)
+                                    }}
+                                    onBlur={onBlur}
+                                    value={value}
+
+                                />
                             )}
-                            rules={{
-                                required: true
-                            }}
+                            name="warn"
+                            defaultValue=""
+                            rules={{ required: true }}
                         />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Animate</Form.Label>
+                        <Form.Label>Tiện ích</Form.Label>
                         <Controller
                             control={control}
+                            render={({ field: { onChange, onBlur, value } }) => (
+                                <Editor apiKey="g8rgmljyc6ryhlggucq6jeqipl6tn5rnqym45lkfm235599i"
+                                    init={tinyConfig}
+                                    onEditorChange={(event) => {
+                                        onChange(event)
+                                    }}
+                                    onBlur={onBlur}
+                                    value={value}
+
+                                />
+                            )}
                             name="animate"
-                            render={({
-                                field: { onChange, onBlur, value }
-                            }) => (
-                                <InputGroup style={{ border: errors.title?.type === "required" && '1px solid red' }}>
-                                    <Form.Control autoFocus required type="text" onChange={e => onChange(e.target.value)}
-                                        onBlur={onBlur}
-                                    />
-                                </InputGroup>
-                            )}
-                            rules={{
-                                required: true
-                            }}
+                            defaultValue=""
+                            rules={{ required: true }}
                         />
                     </Form.Group>
                     <Form.Group className="mt-4" >
@@ -189,7 +186,7 @@ export default () => {
                         Submit
                     </Button>
                     <Button variant="secondary" type="button" className="m-3"
-                        onClick={() => history.push(Routes.Blog.path)}
+                        onClick={() => history.push(Routes.Product.path)}
                     >
                         Cancel
                     </Button>

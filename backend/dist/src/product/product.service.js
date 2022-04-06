@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var _a, _b;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductService = void 0;
 const common_1 = require("@nestjs/common");
@@ -19,44 +18,49 @@ const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const category_schemas_1 = require("../category/schemas/category.schemas");
 const product_schemas_1 = require("./schemas/product.schemas");
+var mongoose = require('mongoose');
 let ProductService = class ProductService {
     constructor(productModel, categoryModel) {
         this.productModel = productModel;
         this.categoryModel = categoryModel;
     }
-    async findAll() {
-        return this.productModel.find().populate("category", "title", "Category");
+    async findByCategory(categoryId) {
+        return this.productModel.find({ category: categoryId });
     }
     async create(productDto, photoURL) {
-        let product = new this.productModel(Object.assign(Object.assign({}, productDto), { photoURL }));
-        let category = await this.categoryModel.findById(product.category.toString());
-        category.products.push(product._id);
-        category.save();
+        let product = new this.productModel();
+        product.title = productDto.title;
+        product.category = productDto.category;
+        product.price = productDto.price;
+        product.content = productDto.content;
+        product.warn = productDto.warn;
+        product.animate = productDto.animate;
+        product.photoURL = photoURL;
         return product.save();
     }
-    async update(id, productDto, photoURL) {
-        let product = await this.productModel.findById(id.toString());
+    async edit(productId, productDto, photoURL) {
+        let product = await this.productModel.findById(productId);
         if (photoURL) {
             product.title = productDto.title;
+            product.category = productDto.category;
             product.price = productDto.price;
             product.content = productDto.content;
-            product.note = productDto.note;
-            product.category = productDto.category;
+            product.warn = productDto.warn;
             product.animate = productDto.animate;
             product.photoURL = photoURL;
         }
         else {
             product.title = productDto.title;
+            product.category = productDto.category;
             product.price = productDto.price;
             product.content = productDto.content;
-            product.note = productDto.note;
-            product.category = productDto.category;
+            product.warn = productDto.warn;
             product.animate = productDto.animate;
         }
         return product.save();
     }
-    async delete(id) {
-        let product = await this.productModel.findById(id.toString());
+    async delete(productId) {
+        let product = await this.productModel.findById(productId);
         return product.remove();
     }
 };
@@ -64,7 +68,8 @@ ProductService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(product_schemas_1.Product.name)),
     __param(1, (0, mongoose_1.InjectModel)(category_schemas_1.Category.name)),
-    __metadata("design:paramtypes", [typeof (_a = typeof mongoose_2.Model !== "undefined" && mongoose_2.Model) === "function" ? _a : Object, typeof (_b = typeof mongoose_2.Model !== "undefined" && mongoose_2.Model) === "function" ? _b : Object])
+    __metadata("design:paramtypes", [mongoose_2.Model,
+        mongoose_2.Model])
 ], ProductService);
 exports.ProductService = ProductService;
 //# sourceMappingURL=product.service.js.map

@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BlogService = void 0;
 const common_1 = require("@nestjs/common");
@@ -22,8 +21,22 @@ let BlogService = class BlogService {
     constructor(blogModel) {
         this.blogModel = blogModel;
     }
-    async findAll() {
-        return this.blogModel.find({}).sort({ createdAt: -1 });
+    async loadMore(blogId) {
+        return this.blogModel.find({ '_id': { $ne: blogId } });
+    }
+    async findAll(skipNumber) {
+        return this.blogModel.find({}).sort({ createdAt: -1 }).skip(skipNumber).limit(6).exec().then(data => {
+            return this.blogModel.countDocuments().exec().then(count => {
+                return {
+                    totalPage: count,
+                    data
+                };
+            });
+        });
+    }
+    async search(textSearch) {
+        let regex = new RegExp(textSearch, "i");
+        return await this.blogModel.find({ title: regex });
     }
     async createBlog(createBlogDto, photoURL, username) {
         let date = new Date();
@@ -59,7 +72,7 @@ let BlogService = class BlogService {
 BlogService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(blog_schemas_1.Blog.name)),
-    __metadata("design:paramtypes", [typeof (_a = typeof mongoose_2.Model !== "undefined" && mongoose_2.Model) === "function" ? _a : Object])
+    __metadata("design:paramtypes", [mongoose_2.Model])
 ], BlogService);
 exports.BlogService = BlogService;
 //# sourceMappingURL=blog.service.js.map

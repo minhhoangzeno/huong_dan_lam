@@ -20,6 +20,7 @@ export default () => {
 
     let deleteCategory = async (categoryId) => {
         await dispatch(deleteCategoryThunk(categoryId));
+        dispatch(getCategoryThunk())
         addToast("Delete Success", { appearance: 'success', autoDismiss: 1000 })
     }
 
@@ -95,7 +96,7 @@ function TableItem({ index, category, routerEditCategory, deleteCategory, router
             <td>
                 <Card.Link href="#" className="text-primary fw-bold">{index}</Card.Link>
             </td>
-            <td>{category?.title}</td>
+            <td>{category.title}</td>
             <td>
                 <Dropdown as={ButtonGroup}>
                     <Dropdown.Toggle as={Button} split variant="link" className="text-dark m-0 p-0">
@@ -105,8 +106,8 @@ function TableItem({ index, category, routerEditCategory, deleteCategory, router
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                         <Dropdown.Item onClick={() => routerDetailCategory(category)}  >
-                                <FontAwesomeIcon icon={faEye} className="me-2" /> View Details
-                            </Dropdown.Item>
+                            <FontAwesomeIcon icon={faEye} className="me-2" /> View Details
+                        </Dropdown.Item>
                         <Dropdown.Item onClick={() => routerEditCategory(category)} >
                             <FontAwesomeIcon icon={faEdit} className="me-2" /> Edit
                         </Dropdown.Item>

@@ -1,0 +1,427 @@
+
+* {
+    padding: 0;
+    margin: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+li {
+    list-style: none;
+}
+ul {
+    padding-left: 0;
+}
+.row{
+    --bs-gutter-x: 0;
+}
+/*# sourceMappingURL=style.css.map */
+.header-setting {
+    height: 32px;
+    background: #ff9800;
+    position: relative;
+}
+.header-setting__address span {
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+}
+.header-setting__address {
+    display: flex;
+}
+.header-setting__address--select {
+    padding-top: 4px;
+    padding-left: 15px;
+}
+.header-settin__language {
+    position: absolute;
+    right: 150px;
+    top: 3px;
+}
+.navbar {
+    height: 100px;
+    display: flex;
+    background-color: white;
+}
+.block-navbar{
+    width: 100%;
+    display: block;
+}
+.navbar-main{
+    width: 600px; 
+}
+.navbar-main__search {
+    height: 40px;
+    width: 600px;
+    display: flex;
+}
+.navbar-main__search input {
+    width: 600px;
+    height: 32px;
+    border: 1px solid #eee;
+}
+.navbar-main__search--button {
+    width: 80px;
+    height: 32px;
+    background-color: white;
+    border: 1px solid #eee;
+    color: #555;
+    font-weight: 500;
+}
+.navbar-main__contact--item label{
+    font-size: 15px;
+    font-weight: 600;
+}
+.navbar-main__contact--item span{
+    color: orange;
+    padding-left: 20px;
+    cursor: pointer;
+}
+.navbar-main__contact{
+    display: flex;
+    justify-content: space-evenly;
+    width: 600px;
+}
+.navbar__content--icon{
+    display: flex;
+    cursor: pointer;
+}
+.navbar-icon__title span{
+    padding-right: 15px;
+    color: black;
+}
+.navbar-icon__title:hover{
+    color: #ff9800;
+}
+.navbar-main__contact--item{
+    cursor: pointer;
+}
+.sign-in{
+    display: block;
+    padding: 8px;
+    border: 1px solid #ff9800;
+    margin-bottom: 10px;
+    border-radius: 3px;
+    background: #ff9800;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  
+  .dac strong {
+    background-color: #fff;
+    color: #363636;
+    text-align: center;
+    font-size: 18px;
+  }
+  
+  .dac {
+    font-family: open sans, sans-serif;
+    font-size: 13px;
+    color: #363636;
+    text-align: center;
+  }
+  
+  .register {
+    display: block;
+    font-size: 15px;
+    color: #bd2026;
+    font-weight: 600;
+  }
+  
+  .login-fb {
+    background: #3b5998 url(https://hyt.r.worldssl.net/images/facebook.png
+  ) no-repeat 6px 5px;
+    border: 1px solid #3b5998;
+    display: block;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 3px;
+    color: #fff;
+  }
+  
+  .login-gg {
+    background: #fff url(https://hyt.r.worldssl.net/images/google.png);
+    border: 1px solid #dedede;
+    color: #333;
+    display: block;
+    padding: 8px;
+    border: 1px solid #ff9800;
+    margin-bottom: 10px;
+    border-radius: 3px;
+    background: #ff9800;
+  }
+  .npf{
+    width: 100%;
+    border: 2px solid #9a9a9a;
+    border-radius: 5px;
+    padding: 5px;
+    strong{
+        font-size: 15px;
+        color:#333
+    }
+    text-align: center;
+  }
+  .box-signin{
+    width: 260px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    z-index: 999;
+    position: absolute;
+    right: 0;
+    background-color: #fff;
+    box-shadow: 0 4px 13px -3px grey;
+    display: none;
+  }
+  .account:hover .box-signin{
+    opacity: 1;
+    right: 0;
+    display: block;
+  }
+  .login-fb:hover{
+      color: white
+  }
+  .sign-in:hover{
+      color: white;
+  }
+/* . -------------------navbar .container__menu {} */
+
+.menu {
+    width: 100%;
+    height: 40px;
+    background-color: #f7f7f7;
+    box-shadow: 0 2px 5px #0a06061a;
+    border-bottom: 1px solid #0e07071a ;
+}
+.ul-navbar {
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
+}
+.navbar-item {
+    display: flex;
+    font-size: 15px;
+    color: #363636;
+    font-weight: 600;
+    cursor: pointer;
+    align-items: center;
+}
+
+.ul-navbar li:hover {
+    color: red;
+}
+.sub-menu{
+    background-color: white;
+    z-index: 2;
+}
+.topic-content {
+    width: 180px;
+    height: 200px;
+    position: absolute;
+    top: 170px;
+    box-shadow: 0 2px 5px #0000001a;
+    left: 250px;
+    display: none;
+}
+.topic:hover>.sub-menu {
+    display: block;
+}
+
+.topic-content li:hover {
+    color: red;
+}
+
+.topic {
+    width: fit-content;
+    
+}
+
+.object-content {
+    width: 180px;
+    height: 220px;
+    position: absolute;
+    top: 170px;
+    box-shadow: 0 2px 5px #0000001a;
+    left: 400px;
+    display: none;
+}
+
+.object-content li:hover {
+    color: red;
+}
+
+.object:hover>.sub-menu {
+    display: block;
+}
+
+.object {
+    width: fit-content;
+}
+
+.design-content {
+    width: 130px;
+    height: 90px;
+    position: absolute;
+    top: 170px;
+    box-shadow: 0 2px 5px #0000001a;
+    left: 590px;
+    display: none;
+}
+
+.design-content li:hover {
+    color: red;
+}
+
+.designs:hover>.sub-menu {
+    display: block;
+}
+
+.designs {
+    width: fit-content;
+}
+
+.color-content {
+    width: 180px;
+    height: 240px;
+    position: absolute;
+    top: 170px;
+    box-shadow: 0 2px 5px #0000001a;
+    left: 750px;
+    display: none;
+}
+
+.sub-menu li:hover {
+    color: red;
+}
+
+.color:hover>.sub-menu {
+    display: block;
+}
+
+.color {
+    width: fit-content;
+}
+
+.collection-content {
+    width: 180px;
+    height: 170px;
+    position: absolute;
+    top: 170px;
+    box-shadow: 0 2px 5px #0000001a;
+    left: 920px;
+    display: none;
+}
+
+.collection:hover>.sub-menu {
+    display: block;
+}
+
+.collection {
+    width: fit-content;
+}
+
+.gift-content {
+    width: 180px;
+    height: 220px;
+    position: absolute;
+    top: 170px;
+    box-shadow: 0 2px 5px #0000001a;
+    left: 1100px;
+    display: none;
+}
+
+.item {
+    font-size: 13px;
+    padding-top: 2px;
+    cursor: pointer;
+    color: #363636;
+    padding: 4px;
+    text-transform: uppercase;
+
+}
+
+.gift-content .gift-content:hover {
+    color: red;
+}
+
+.gift:hover>.sub-menu {
+    display: block;
+}
+
+.gift {
+    width: fit-content;
+}
+
+.meaningful {
+    width: fit-content;
+}
+.padding{
+   text-align: center;
+   color: #555555;
+   text-transform: uppercase;
+}
+.padding:hover{
+    color: red
+}
+/* .footer.................................. */
+.footer{
+    width: 100%;
+    background-image:url(https://hyt.r.worldssl.net/images/bg-special.png);
+    padding-top: 30px;
+    padding-bottom: 30px;
+    display: flex;
+}
+.address-shop{
+    width: 23%;
+    font-size: 13px;
+}
+.address{
+    display: flex;
+    justify-content: space-between;
+}
+a{
+    text-decoration: none;
+    color: #bd2026;
+    cursor: pointer;
+}
+h6{
+    cursor: pointer;
+}
+strong{
+    color: #bd2026 ;
+    cursor: pointer;
+}
+.service{
+    display: flex;
+    font-size: 13px;
+    justify-content: space-between;
+}
+.service-shop{
+    width: 23%;
+}
+.input-submit{
+    width: 40px;
+    height: 18px;
+    background-color:  #bd2026;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    color: white;
+}
+p{
+    margin-bottom: 5px;
+}
+.tittle{
+    font-size: 18px;
+    text-align: center;
+}
+.achieve::before{
+    content: url(https://hyt.r.worldssl.net/images/icon-hyt.png);
+    position: absolute;
+    left: 75px;
+
+}
+.achieve{
+    color: #707070;;
+}

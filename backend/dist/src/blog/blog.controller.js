@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var _a, _b, _c, _d;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BlogController = void 0;
 const common_1 = require("@nestjs/common");
@@ -24,8 +23,14 @@ let BlogController = class BlogController {
     constructor(blogService) {
         this.blogService = blogService;
     }
-    async getBlogs() {
-        return this.blogService.findAll();
+    async getBlogs(skipNumber) {
+        return this.blogService.findAll(skipNumber);
+    }
+    async getBlogsLoadMore(body) {
+        return this.blogService.loadMore(body.blogId);
+    }
+    async searchBlogs(body) {
+        return this.blogService.search(body.textSearch);
     }
     async uploadFile(file, body, req) {
         return this.blogService.createBlog(body, file.filename, req.user._doc.fullName);
@@ -46,11 +51,26 @@ let BlogController = class BlogController {
     }
 };
 __decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Get)(':skipNumber'),
+    __param(0, (0, common_1.Param)('skipNumber')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], BlogController.prototype, "getBlogs", null);
+__decorate([
+    (0, common_1.Post)('loadmore'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], BlogController.prototype, "getBlogsLoadMore", null);
+__decorate([
+    (0, common_1.Post)('search'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], BlogController.prototype, "searchBlogs", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Post)('create'),
@@ -67,7 +87,7 @@ __decorate([
     __param(1, (0, common_1.Body)()),
     __param(2, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_b = typeof Express !== "undefined" && (_a = Express.Multer) !== void 0 && _a.File) === "function" ? _b : Object, blog_dto_dto_1.BlogDto, Object]),
+    __metadata("design:paramtypes", [Object, blog_dto_dto_1.BlogDto, Object]),
     __metadata("design:returntype", Promise)
 ], BlogController.prototype, "uploadFile", null);
 __decorate([
@@ -101,7 +121,7 @@ __decorate([
     __param(1, (0, common_1.Body)()),
     __param(2, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_d = typeof Express !== "undefined" && (_c = Express.Multer) !== void 0 && _c.File) === "function" ? _d : Object, blog_dto_dto_1.BlogDto, Object]),
+    __metadata("design:paramtypes", [Object, blog_dto_dto_1.BlogDto, Object]),
     __metadata("design:returntype", Promise)
 ], BlogController.prototype, "updateBlog", null);
 BlogController = __decorate([

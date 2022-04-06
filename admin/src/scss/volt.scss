@@ -42,4 +42,18 @@
 // Components
 @import "volt/components";
 
+
+
+.order__detail{
+  table{
+      width: 100%;
+      background-color: #fff;
+  }
+  table, th, td {
+      border: 1px solid;
+  }
+  th,td{
+      padding-left: 10px;
+  }
+}
 // write your custom styles here!

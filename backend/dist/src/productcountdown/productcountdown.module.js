@@ -9,7 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductcountdownModule = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
-const countdown_schemas_1 = require("../countdown/schemas/countdown.schemas");
+const countdown_schemas_1 = require("src/countdown/schemas/countdown.schemas");
 const vote_user_schemas_1 = require("../vote-user/schemas/vote-user.schemas");
 const productcountdown_controller_1 = require("./productcountdown.controller");
 const productcountdown_service_1 = require("./productcountdown.service");

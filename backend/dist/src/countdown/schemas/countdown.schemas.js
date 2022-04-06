@@ -8,7 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var _a, _b, _c, _d, _e;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CountDownSchema = exports.CountDown = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
@@ -17,7 +16,7 @@ let CountDown = class CountDown {
 };
 __decorate([
     (0, mongoose_1.Prop)(),
-    __metadata("design:type", typeof (_c = typeof mongoose !== "undefined" && (_a = mongoose.Schema) !== void 0 && (_b = _a.Types) !== void 0 && _b.ObjectId) === "function" ? _c : Object)
+    __metadata("design:type", mongoose.Schema.Types.ObjectId)
 ], CountDown.prototype, "id", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ required: true }),
@@ -25,19 +24,27 @@ __decorate([
 ], CountDown.prototype, "title", void 0);
 __decorate([
     (0, mongoose_1.Prop)(),
-    __metadata("design:type", typeof (_d = typeof Date !== "undefined" && Date) === "function" ? _d : Object)
-], CountDown.prototype, "time", void 0);
+    __metadata("design:type", Date)
+], CountDown.prototype, "startDate", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", Date)
+], CountDown.prototype, "endDate", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }] }),
     __metadata("design:type", Array)
 ], CountDown.prototype, "products", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] }),
+    __metadata("design:type", Array)
+], CountDown.prototype, "votes", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ProductCountDown' }] }),
     __metadata("design:type", Array)
 ], CountDown.prototype, "total", void 0);
 __decorate([
     (0, mongoose_1.Prop)(),
-    __metadata("design:type", typeof (_e = typeof Date !== "undefined" && Date) === "function" ? _e : Object)
+    __metadata("design:type", Date)
 ], CountDown.prototype, "createdAt", void 0);
 CountDown = __decorate([
     (0, mongoose_1.Schema)()

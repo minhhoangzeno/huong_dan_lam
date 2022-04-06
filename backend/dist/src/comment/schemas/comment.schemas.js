@@ -8,16 +8,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var _a, _b, _c, _d;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommentSchema = exports.Comment = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose = require("mongoose");
+const user_schemas_1 = require("../../user/schemas/user.schemas");
 let Comment = class Comment {
 };
 __decorate([
     (0, mongoose_1.Prop)(),
-    __metadata("design:type", typeof (_c = typeof mongoose !== "undefined" && (_a = mongoose.Schema) !== void 0 && (_b = _a.Types) !== void 0 && _b.ObjectId) === "function" ? _c : Object)
+    __metadata("design:type", mongoose.Schema.Types.ObjectId)
 ], Comment.prototype, "id", void 0);
 __decorate([
     (0, mongoose_1.Prop)(),
@@ -28,17 +28,13 @@ __decorate([
     __metadata("design:type", String)
 ], Comment.prototype, "title", void 0);
 __decorate([
-    (0, mongoose_1.Prop)(),
-    __metadata("design:type", String)
+    (0, mongoose_1.Prop)({ type: mongoose.Schema.Types.ObjectId, ref: 'User' }),
+    __metadata("design:type", user_schemas_1.User)
 ], Comment.prototype, "createdBy", void 0);
 __decorate([
-    (0, mongoose_1.Prop)(),
-    __metadata("design:type", typeof (_d = typeof Date !== "undefined" && Date) === "function" ? _d : Object)
+    (0, mongoose_1.Prop)({ default: Date() }),
+    __metadata("design:type", Date)
 ], Comment.prototype, "createdAt", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Reply' }] }),
-    __metadata("design:type", Array)
-], Comment.prototype, "replies", void 0);
 Comment = __decorate([
     (0, mongoose_1.Schema)()
 ], Comment);

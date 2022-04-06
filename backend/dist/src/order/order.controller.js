@@ -23,17 +23,26 @@ let OrderController = class OrderController {
     async findAll() {
         return this.orderService.findAll();
     }
-    async findById(id) {
-        return this.orderService.findById(id);
+    async getOrderByAmount(year) {
+        return this.orderService.findOrderByAmount(year);
+    }
+    async getOrderByRevenue(year) {
+        return this.orderService.findOrderByRevenue(year);
+    }
+    async searchOrder(body) {
+        return this.orderService.search(body.textSearch);
+    }
+    async findByUser(req) {
+        return this.orderService.findByUser(req.user._doc._id);
     }
     async create(body, req) {
-        return this.orderService.create(body.order, body.orders, req.user._doc._id);
+        return this.orderService.create(body.orderDto, body.orderProductDto, req.user._doc._id);
     }
-    async update(id, body) {
-        return this.orderService.update(id, body);
+    async edit(orderId, body) {
+        return this.orderService.editStatus(orderId, body.status);
     }
-    async delete(id) {
-        return this.orderService.delete(id);
+    async delete(orderId) {
+        return this.orderService.delete(orderId);
     }
 };
 __decorate([
@@ -43,12 +52,35 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], OrderController.prototype, "findAll", null);
 __decorate([
-    (0, common_1.Get)('detail/:id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Get)('amount/:year'),
+    __param(0, (0, common_1.Param)('year')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], OrderController.prototype, "findById", null);
+], OrderController.prototype, "getOrderByAmount", null);
+__decorate([
+    (0, common_1.Get)('revenue/:year'),
+    __param(0, (0, common_1.Param)('year')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], OrderController.prototype, "getOrderByRevenue", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.Post)('search'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], OrderController.prototype, "searchOrder", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.Get)('user'),
+    __param(0, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], OrderController.prototype, "findByUser", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Post)('create'),
@@ -60,17 +92,17 @@ __decorate([
 ], OrderController.prototype, "create", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Post)('edit/:id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Post)('edit/status/:orderId'),
+    __param(0, (0, common_1.Param)('orderId')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
-], OrderController.prototype, "update", null);
+], OrderController.prototype, "edit", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Delete)('delete/:id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Delete)('delete/:orderId'),
+    __param(0, (0, common_1.Param)('orderId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)

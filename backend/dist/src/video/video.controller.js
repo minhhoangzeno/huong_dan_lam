@@ -11,47 +11,55 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var _a, _b, _c, _d;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.VideoController = void 0;
 const common_1 = require("@nestjs/common");
 const platform_express_1 = require("@nestjs/platform-express");
 const multer_1 = require("multer");
 const jwt_auth_guard_1 = require("../auth/guard/jwt-auth.guard");
-const video_dto_1 = require("./dto/video.dto");
 const video_service_1 = require("./video.service");
+const video_dto_1 = require("./dto/video.dto");
 let VideoController = class VideoController {
     constructor(videoService) {
         this.videoService = videoService;
     }
-    async findAll() {
-        return this.videoService.findAll();
+    async getBlogsLoadMore(body) {
+        return this.videoService.loadMore(body.videoId);
     }
-    async uploadFile(file, body, req) {
-        return this.videoService.createVideo(body, file.filename, req.user._doc.fullName);
+    async getVideos(skipNumber) {
+        return this.videoService.findAll(skipNumber);
     }
-    async deleteVideo(id) {
+    async uploadFile(files, body, req) {
+        return this.videoService.createVideo(body, files.file[0].filename, files.videoURL[0].filename, req.user._doc.fullName);
+    }
+    async removeBlog(id) {
         return this.videoService.deleteById(id);
     }
-    async updateBlog(file, body, id) {
-        if (file) {
-            return this.videoService.updateById(id, body, file.filename);
-        }
-        else {
-            return this.videoService.updateById(id, body);
-        }
+    async getBlogById(id) {
+        return this.videoService.findById(id);
     }
 };
 __decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Post)('loadmore'),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], VideoController.prototype, "findAll", null);
+], VideoController.prototype, "getBlogsLoadMore", null);
+__decorate([
+    (0, common_1.Get)(':skipNumber'),
+    __param(0, (0, common_1.Param)('skipNumber')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], VideoController.prototype, "getVideos", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Post)('create'),
-    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file', {
+    (0, common_1.UseInterceptors)((0, platform_express_1.FileFieldsInterceptor)([
+        { name: 'file', maxCount: 1 },
+        { name: 'videoURL', maxCount: 1 },
+    ], {
         storage: (0, multer_1.diskStorage)({
             destination: './uploads',
             filename: (req, file, cb) => {
@@ -60,40 +68,28 @@ __decorate([
             }
         })
     })),
-    __param(0, (0, common_1.UploadedFile)()),
+    __param(0, (0, common_1.UploadedFiles)()),
     __param(1, (0, common_1.Body)()),
     __param(2, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_b = typeof Express !== "undefined" && (_a = Express.Multer) !== void 0 && _a.File) === "function" ? _b : Object, video_dto_1.VideoDto, Object]),
+    __metadata("design:paramtypes", [Object, video_dto_1.VideoDto, Object]),
     __metadata("design:returntype", Promise)
 ], VideoController.prototype, "uploadFile", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Post)('remove/:id'),
+    (0, common_1.Delete)('delete/:id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], VideoController.prototype, "deleteVideo", null);
+], VideoController.prototype, "removeBlog", null);
 __decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Post)('update/:id'),
-    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file', {
-        storage: (0, multer_1.diskStorage)({
-            destination: './uploads',
-            filename: (req, file, cb) => {
-                const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
-                cb(null, `${randomName}${(file.originalname)}`);
-            }
-        })
-    })),
-    __param(0, (0, common_1.UploadedFile)()),
-    __param(1, (0, common_1.Body)()),
-    __param(2, (0, common_1.Param)('id')),
+    (0, common_1.Get)('detail/:id'),
+    __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_d = typeof Express !== "undefined" && (_c = Express.Multer) !== void 0 && _c.File) === "function" ? _d : Object, video_dto_1.VideoDto, Object]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], VideoController.prototype, "updateBlog", null);
+], VideoController.prototype, "getBlogById", null);
 VideoController = __decorate([
     (0, common_1.Controller)('video'),
     __metadata("design:paramtypes", [video_service_1.VideoService])

@@ -11,41 +11,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var _a, _b, _c;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommentService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-const reply_schemas_1 = require("../reply/schemas/reply.schemas");
-const video_schemas_1 = require("../video/schemas/video.schemas");
 const comment_schemas_1 = require("./schemas/comment.schemas");
 let CommentService = class CommentService {
-    constructor(commentModel, videoModel, replyModel) {
+    constructor(commentModel) {
         this.commentModel = commentModel;
-        this.videoModel = videoModel;
-        this.replyModel = replyModel;
     }
     async getComment(typeId) {
-        return this.commentModel.find({ typeId }).populate('replies', 'title createdBy', 'Reply');
+        return this.commentModel.find({ typeId }).populate("createdBy", "fullName photoURL", "User");
     }
-    async addComment(createCommentDto, fullName) {
-        let date = new Date();
-        let comment = new this.commentModel(Object.assign(Object.assign({}, createCommentDto), { createdAt: date, createdBy: fullName }));
-        let video = await this.videoModel.findById(createCommentDto.typeId);
-        if (video) {
-            video.comments.push(comment._id);
-            video.save();
-        }
+    async addComment(createCommentDto, user) {
+        let comment = new this.commentModel(Object.assign({}, createCommentDto));
+        comment.createdBy = user;
         return comment.save();
     }
     async deleteComment(commentId) {
         let comment = await this.commentModel.findById(commentId);
-        comment.remove();
-        let replies = await this.replyModel.find({ commentId });
-        if (replies.length > 0) {
-            replies.forEach(reply => reply.remove());
-        }
+        return comment.remove();
     }
     async updateComment(commentId, title) {
         let comment = await this.commentModel.findById(commentId);
@@ -58,9 +44,7 @@ let CommentService = class CommentService {
 CommentService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(comment_schemas_1.Comment.name)),
-    __param(1, (0, mongoose_1.InjectModel)(video_schemas_1.Video.name)),
-    __param(2, (0, mongoose_1.InjectModel)(reply_schemas_1.Reply.name)),
-    __metadata("design:paramtypes", [typeof (_a = typeof mongoose_2.Model !== "undefined" && mongoose_2.Model) === "function" ? _a : Object, typeof (_b = typeof mongoose_2.Model !== "undefined" && mongoose_2.Model) === "function" ? _b : Object, typeof (_c = typeof mongoose_2.Model !== "undefined" && mongoose_2.Model) === "function" ? _c : Object])
+    __metadata("design:paramtypes", [mongoose_2.Model])
 ], CommentService);
 exports.CommentService = CommentService;
 //# sourceMappingURL=comment.service.js.map

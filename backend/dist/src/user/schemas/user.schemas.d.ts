@@ -1,6 +1,5 @@
 import { Document } from 'mongoose';
 import * as mongoose from 'mongoose';
-import { Role } from 'src/role/role.enum';
 export declare type UserDocument = User & Document;
 export declare class User {
     id: mongoose.Schema.Types.ObjectId;
@@ -10,9 +9,12 @@ export declare class User {
     confirmationCode: string;
     status: string;
     firstName: string;
+    city: number;
+    phoneNumber: string;
+    district: number;
     lastName: string;
-    roles: Role[];
+    roles: string;
     fullName: string;
     photoURL: string;
 }
-export declare const UserSchema: any;
+export declare const UserSchema: mongoose.Schema<Document<User, any, any>, mongoose.Model<Document<User, any, any>, any, any, any>, any, any>;

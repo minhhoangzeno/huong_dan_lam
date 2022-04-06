@@ -1,9 +1,9 @@
-import { Col, Row } from '@themesberg/react-bootstrap';
+
+import { Col } from '@themesberg/react-bootstrap';
+import { Row } from '@themesberg/react-bootstrap';
 import React from "react";
-import OrderOverview from './OrderOverview';
-// import CountdownOverview from './CountdownOverview';
-// import DetailCountdownOverview from './DetailCountdownOverview';
-import ProductOverview from './ProductOverview';
+import DashboardOrderByAmount from './DashboardOrderByAmount';
+import DashboardOrderByRevenue from './DashboardOrderByRevenue';
 import UserOverview from './UserOverview';
 
 
@@ -19,8 +19,8 @@ export default () => {
           />
         </Col> */}
         <UserOverview />
-        <ProductOverview />
-        <OrderOverview />
+        {/* <ProductOverview />
+        <CountdownOverview /> */}
       </Row>
 
       <Row>
@@ -28,12 +28,9 @@ export default () => {
           <Row>
             <Col xs={12} xl={12} className="mb-4">
               <Row>
-                <Col xs={12} lg={8} className="mb-4">
-                  {/* <DetailCountdownOverview /> */}
-                </Col>
-                <Col xs={12} lg={4} className="mb-4">
-                  {/* <VoteUserOverview /> */}
-                </Col>
+                {<DashboardOrderByAmount />}
+                {/* {(user.roles === "superadmin" || user.roles === "admin") && <DashboardOrderByAmount />} */}
+                {<DashboardOrderByRevenue />}
               </Row>
             </Col>
 

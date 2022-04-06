@@ -7,29 +7,29 @@ import { ProductService } from './product.service';
 
 @Controller('product')
 export class ProductController {
-    constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService) { }
 
-    @Get()
-    async findAll() {
-        return this.productService.findAll();
-    }
+  @Get('/:productId')
+  async getProduct(@Param('productId') productId) {
+    return this.productService.findByCategory(productId);
+  }
 
-    @UseGuards(JwtAuthGuard)
-    @Post('create')
-    @UseInterceptors(FileInterceptor('file', {
-        storage: diskStorage({
-            destination: './uploads',
-            filename: (req, file, cb) => {
-                const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('')
-                cb(null, `${randomName}${(file.originalname)}`)
-            }
-        })
-    }))
-    async create(@UploadedFile() file: Express.Multer.File, @Body() body: ProductDto) {
-        return this.productService.create(body, file.filename)
-    }
+  @UseGuards(JwtAuthGuard)
+  @Post('create')
+  @UseInterceptors(FileInterceptor('file', {
+    storage: diskStorage({
+      destination: './uploads',
+      filename: (req, file, cb) => {
+        const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('')
+        cb(null, `${randomName}${(file.originalname)}`)
+      }
+    })
+  }))
+  async uploadFile(@UploadedFile() file: Express.Multer.File, @Body() body: ProductDto) {
+    return this.productService.create(body, file.filename)
+  }
 
-    @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
     @Post('edit/:id')
     @UseInterceptors(FileInterceptor('file', {
         storage: diskStorage({
@@ -40,16 +40,18 @@ export class ProductController {
             }
         })
     }))
-    async update(@Param('id') id, @UploadedFile() file: Express.Multer.File, @Body() body: ProductDto) {
+    async updateBlog(@UploadedFile() file: Express.Multer.File, @Body() body, @Param('id') id) {
         if (file) {
-            return this.productService.update(id, body, file.filename)
+            return this.productService.edit(id, body, file.filename)
         } else {
-            return this.productService.update(id, body)
+            return this.productService.edit(id, body)
         }
     }
 
+    @UseGuards(JwtAuthGuard)
     @Delete('delete/:id')
-    async delete(@Param('id') id) {
-        return this.productService.delete(id);
+    async removeBlog(@Param('id') id) {
+        return this.productService.delete(id)
     }
+
 }

@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
@@ -68,11 +67,11 @@ let UserService = class UserService {
         transport.sendMail({
             from: 'zenominhhoang@gmail.com',
             to: email,
-            subject: "Please confirm your account",
-            html: `<h1>Email Confirmation</h1>
-                <h2>Hello ${name}</h2>
-                <p>Thank you for subscribing. Please confirm your email by clicking on the following link</p>
-                <a href=http://localhost:3001/verify-email/${confirmationCode}> Click here</a>
+            subject: "Vui lòng xác nhận tài khoản của bạn",
+            html: `<h1>Email xác nhận</h1>
+                <h2>Xin chào ${name}</h2>
+                <p>Cảm ơn bạn đã đăng ký. Vui lòng xác nhận tài khoản bằng cách nhấn vào đường link dưới đây</p>
+                <a href=http://localhost:3001/verify-email/${confirmationCode}>Link</a>
                 </div>`,
         }).catch(err => console.log(err));
     }
@@ -132,11 +131,11 @@ let UserService = class UserService {
         transport.sendMail({
             from: 'zenominhhoang@gmail.com',
             to: email,
-            subject: "Please confirm your account",
-            html: `<h1>Email Forgot Password</h1>
-                <h2>Hello ${name}</h2>
-                <p>Thank you for subscribing. Please confirm your email by clicking on the following link</p>
-                <a href=http://localhost:3001/reset-password/${confirmationCode}> Click here</a>
+            subject: "Quên mật khẩu",
+            html: `<h1>Xác nhận mật khẩu mới</h1>
+                <h2>Xin chào ${name}</h2>
+                <p>Vui lòng nhấn vào đường link dưới đây để tạo mật khẩu mới!</p>
+                <a href=http://localhost:3001/reset-password/${confirmationCode}>Link</a>
                 </div>`,
         }).catch(err => console.log(err));
     }
@@ -186,11 +185,16 @@ let UserService = class UserService {
         }
         return modelUser.save();
     }
+    async roleUser(id, role) {
+        const user = await this.userModel.findById(id.toString());
+        user.roles = role;
+        return user.save();
+    }
 };
 UserService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(user_schemas_1.User.name)),
-    __metadata("design:paramtypes", [typeof (_a = typeof mongoose_2.Model !== "undefined" && mongoose_2.Model) === "function" ? _a : Object])
+    __metadata("design:paramtypes", [mongoose_2.Model])
 ], UserService);
 exports.UserService = UserService;
 //# sourceMappingURL=user.service.js.map

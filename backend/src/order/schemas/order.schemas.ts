@@ -1,46 +1,98 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import * as mongoose from 'mongoose';
 import { Document } from 'mongoose';
-import { OrderItem } from 'src/order-item/schemas/order-item.schemas';
+import * as mongoose from 'mongoose';
 import { User } from 'src/user/schemas/user.schemas';
+import { OrderProduct } from 'src/order-product/schemas/order-product.schemas';
 
 export type OrderDocument = Order & Document;
 
 @Schema()
 export class Order {
-    @Prop()
-    id: mongoose.Schema.Types.ObjectId;
+  @Prop()
+  id: mongoose.Schema.Types.ObjectId;
 
-    @Prop({ required: true })
-    fullName: string;
+  @Prop({
+    type: {
+      fullName: { type: String }, phoneNumber: { type: String },
+      email: { type: String },
+      city: { type: String },
+      district: { type: String },
+      address: { type: String },
+    }
+  })
+  peopleSend: {
+    fullName: String,
+    phoneNumber: String,
+    city: String,
+    district: String,
+    address: String,
+    email: string
+  }
 
-    @Prop({ required: true })
-    phoneNumber: string;
+  @Prop({
+    type: {
+      fullName: { type: String }, phoneNumber: { type: String },
+      city: { type: String },
+      email: { type: String },
+      district: { type: String },
+      address: { type: String },
+    }
+  })
+  peopleRecieve: {
+    fullName: String,
+    phoneNumber: String,
+    city: String,
+    district: String,
+    email: String,
+    address: String
+  }
 
-    @Prop({ required: true })
-    email: string;
+  @Prop({ type: mongoose.Schema.Types.ObjectId })
+  createdBy: User
 
-    @Prop({ required: true })
-    address: string;
+  @Prop()
+  code: String
 
-    @Prop({ required: true })
-    price: Number;
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'OrderProduct' }] })
+  orderProducts: OrderProduct[]
 
-    @Prop()
-    note: string;
+  @Prop({
+    type: {
+      year: { type: String }, month: { type: String },
+      day: { type: String },
+      hour: { type: String }
+    }
+  })
+  time: {
+    year: String,
+    month: String,
+    day: String,
+    hour: String
+  }
 
-    @Prop({ default: 'Pending' })
-    status: string;
+  @Prop({
+    type: {
+      titleSend: { type: String }, occasion: { type: String },
+      noteSendToPersonReceive: { type: String },
+      noteSendToPersonAdmin: { type: String }
+    }
+  })
+  message: {
+    titleSend: String,
+    occasion: String,
+    noteSendToPersonReceive: String,
+    noteSendToPersonAdmin: String
+  }
 
-    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-    user: User;
+  @Prop()
+  totalPrice: Number
 
-    @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'OrderItem' }] })
-    orders: OrderItem[];
+  @Prop({ default: "Pending" })
+  status: String
 
-    @Prop({ default: new Date() })
-    createdAt: Date;
-
+  @Prop({ default: new Date() })
+  createdAt: Date;
 }
+
 
 export const OrderSchema = SchemaFactory.createForClass(Order);

@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CategoryService = void 0;
 const common_1 = require("@nestjs/common");
@@ -29,20 +28,20 @@ let CategoryService = class CategoryService {
         let category = new this.categoryModel({ title });
         return category.save();
     }
-    async update(title, id) {
-        let category = await this.categoryModel.findById(id.toString());
+    async update(categoryId, title) {
+        let category = await this.categoryModel.findById(categoryId);
         category.title = title;
         return category.save();
     }
-    async delete(id) {
-        let category = await this.categoryModel.findById(id.toString());
+    async delete(categoryId) {
+        let category = await this.categoryModel.findById(categoryId);
         return category.remove();
     }
 };
 CategoryService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(category_schemas_1.Category.name)),
-    __metadata("design:paramtypes", [typeof (_a = typeof mongoose_2.Model !== "undefined" && mongoose_2.Model) === "function" ? _a : Object])
+    __metadata("design:paramtypes", [mongoose_2.Model])
 ], CategoryService);
 exports.CategoryService = CategoryService;
 //# sourceMappingURL=category.service.js.map

@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var _a, _b, _c, _d;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductController = void 0;
 const common_1 = require("@nestjs/common");
@@ -24,30 +23,31 @@ let ProductController = class ProductController {
     constructor(productService) {
         this.productService = productService;
     }
-    async findAll() {
-        return this.productService.findAll();
+    async getProduct(productId) {
+        return this.productService.findByCategory(productId);
     }
-    async create(file, body) {
+    async uploadFile(file, body) {
         return this.productService.create(body, file.filename);
     }
-    async update(id, file, body) {
+    async updateBlog(file, body, id) {
         if (file) {
-            return this.productService.update(id, body, file.filename);
+            return this.productService.edit(id, body, file.filename);
         }
         else {
-            return this.productService.update(id, body);
+            return this.productService.edit(id, body);
         }
     }
-    async delete(id) {
+    async removeBlog(id) {
         return this.productService.delete(id);
     }
 };
 __decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Get)('/:productId'),
+    __param(0, (0, common_1.Param)('productId')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], ProductController.prototype, "findAll", null);
+], ProductController.prototype, "getProduct", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Post)('create'),
@@ -63,9 +63,9 @@ __decorate([
     __param(0, (0, common_1.UploadedFile)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_b = typeof Express !== "undefined" && (_a = Express.Multer) !== void 0 && _a.File) === "function" ? _b : Object, product_dto_1.ProductDto]),
+    __metadata("design:paramtypes", [Object, product_dto_1.ProductDto]),
     __metadata("design:returntype", Promise)
-], ProductController.prototype, "create", null);
+], ProductController.prototype, "uploadFile", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Post)('edit/:id'),
@@ -78,20 +78,21 @@ __decorate([
             }
         })
     })),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.UploadedFile)()),
-    __param(2, (0, common_1.Body)()),
+    __param(0, (0, common_1.UploadedFile)()),
+    __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, typeof (_d = typeof Express !== "undefined" && (_c = Express.Multer) !== void 0 && _c.File) === "function" ? _d : Object, product_dto_1.ProductDto]),
+    __metadata("design:paramtypes", [Object, Object, Object]),
     __metadata("design:returntype", Promise)
-], ProductController.prototype, "update", null);
+], ProductController.prototype, "updateBlog", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Delete)('delete/:id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], ProductController.prototype, "delete", null);
+], ProductController.prototype, "removeBlog", null);
 ProductController = __decorate([
     (0, common_1.Controller)('product'),
     __metadata("design:paramtypes", [product_service_1.ProductService])

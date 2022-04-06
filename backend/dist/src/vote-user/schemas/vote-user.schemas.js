@@ -8,11 +8,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.VoteUserSchema = exports.VoteUser = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose = require("mongoose");
 const user_schemas_1 = require("../../user/schemas/user.schemas");
+const productcountdown_schemas_1 = require("src/productcountdown/schemas/productcountdown.schemas");
 let VoteUser = class VoteUser {
 };
 __decorate([
@@ -24,9 +26,9 @@ __decorate([
     __metadata("design:type", user_schemas_1.User)
 ], VoteUser.prototype, "user", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ProductCountDown' }] }),
-    __metadata("design:type", Array)
-], VoteUser.prototype, "votes", void 0);
+    (0, mongoose_1.Prop)({ type: mongoose.Schema.Types.ObjectId, ref: 'ProductCountDown' }),
+    __metadata("design:type", typeof (_a = typeof productcountdown_schemas_1.ProductCountDown !== "undefined" && productcountdown_schemas_1.ProductCountDown) === "function" ? _a : Object)
+], VoteUser.prototype, "productCountDown", void 0);
 __decorate([
     (0, mongoose_1.Prop)(),
     __metadata("design:type", Date)

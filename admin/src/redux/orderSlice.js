@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { deleteOrder, detailOrder, editOrder, getOrder } from '../services/order.service';
+import { addOrder, changeStatusOrder, deleteOrder, detailOrder, editOrder, getOrder, getOrderByUser } from '../services/order.service';
 
 const initialState = {
     data: null,
@@ -25,11 +25,22 @@ export const orderSlice = createSlice({
 export const { setData, setError } = orderSlice.actions;
 
 // Define a thunk that dispatches those action creators
-export const getOrderThunk = () => async (dispatch) => {
+export const getOrderThunk = (textSearch) => async (dispatch) => {
 
     try {
-        const data = await getOrder();
+        const data = await getOrder(textSearch);
         dispatch(setData(data))
+        return data;
+    } catch (err) {
+       console.log(err)
+    }
+    //done
+}
+
+
+export const getOrderByUserThunk = (userId) => async (dispatch) => {
+    try {
+        const data = await getOrderByUser(userId);
         return data;
     } catch (err) {
         dispatch(setError(err))
@@ -37,15 +48,15 @@ export const getOrderThunk = () => async (dispatch) => {
     //done
 }
 
-// export const addBlogThunk = (data) => async (dispatch) => {
-//     try {
-//         let response = await addBlog(data);
-//         getBlogThunk();
-//         return response;
-//     } catch (error) {
-//         console.log(error)
-//     }
-// }
+export const addOrderThunk = (data) => async (dispatch) => {
+    try {
+        let response = await addOrder(data);
+        getOrderThunk();
+        return response;
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 
 
@@ -59,6 +70,18 @@ export const editOrderThunk = (orderId, data) => async (dispatch) => {
     }
 }
 
+
+export const changeStatusOrderThunk = (orderId, data) => async (dispatch) => {
+    try {
+        let response = await changeStatusOrder(orderId, data);
+        getOrderThunk()
+        return response;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 export const detailOrderThunk = (data) => async () => {
     try {
         let response = await detailOrder(data);
@@ -67,6 +90,7 @@ export const detailOrderThunk = (data) => async () => {
         console.log(error)
     }
 }
+
 export const deleteOrderThunk = (data) => async () => {
     try {
         let response = await deleteOrder(data);

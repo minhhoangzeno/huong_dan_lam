@@ -1,5 +1,4 @@
 /// <reference types="multer" />
-/// <reference types="mongoose" />
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.service';
 export declare class UserController {
@@ -21,6 +20,9 @@ export declare class UserController {
         _id: any;
     }>;
     updateUser(file: Express.Multer.File, body: any, req: any): Promise<import("./schemas/user.schemas").User & import("mongoose").Document<any, any, any> & {
+        _id: any;
+    }>;
+    roleUser(body: any): Promise<import("./schemas/user.schemas").User & import("mongoose").Document<any, any, any> & {
         _id: any;
     }>;
 }

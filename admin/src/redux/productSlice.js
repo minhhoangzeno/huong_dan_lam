@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addProduct, deleteProduct, detailProduct, editProduct, getProduct } from '../services/product.service';
+import { addProduct, deleteProduct, detailProduct, editProduct, getProductByCategory } from '../services/product.service';
 
 const initialState = {
     data: null,
@@ -25,12 +25,11 @@ export const productSlice = createSlice({
 export const { setData, setError } = productSlice.actions;
 
 // Define a thunk that dispatches those action creators
-export const getProductThunk = () => async (dispatch) => {
+export const getProductThunk = (dto) => async (dispatch) => {
 
     try {
-        const data = await getProduct();
+        const data = await getProductByCategory(dto);
         dispatch(setData(data))
-
         return data;
     } catch (err) {
         dispatch(setError(err))

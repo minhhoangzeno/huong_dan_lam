@@ -16,19 +16,45 @@ exports.VoteUserService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
+const productcountdown_schemas_1 = require("src/productcountdown/schemas/productcountdown.schemas");
 const vote_user_schemas_1 = require("./schemas/vote-user.schemas");
 let VoteUserService = class VoteUserService {
-    constructor(voteUserModel) {
+    constructor(voteUserModel, productCountdownModel) {
         this.voteUserModel = voteUserModel;
+        this.productCountdownModel = productCountdownModel;
     }
     async findAll() {
-        return this.voteUserModel.find();
+        let data = await this.voteUserModel.aggregate([
+            {
+                $group: {
+                    _id: "$user",
+                    totalVote: { $sum: 1 },
+                },
+            }
+        ]);
+        let resp = data.sort((a, b) => b.totalVote - a.totalVote);
+        return this.voteUserModel.populate(resp, { path: '_id', select: 'fullName photoURL', model: 'User' });
+    }
+    async findById(userId) {
+        let voteUsers = await this.voteUserModel.find({ user: userId }).populate({
+            path: "productCountDown",
+            select: "product countdown title",
+            model: "ProductCountDown",
+            populate: {
+                path: "product",
+                select: "title author",
+                model: "Product"
+            },
+        });
+        return voteUsers;
     }
 };
 VoteUserService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(vote_user_schemas_1.VoteUser.name)),
-    __metadata("design:paramtypes", [mongoose_2.Model])
+    __param(1, (0, mongoose_1.InjectModel)(productcountdown_schemas_1.ProductCountDown.name)),
+    __metadata("design:paramtypes", [mongoose_2.Model,
+        mongoose_2.Model])
 ], VoteUserService);
 exports.VoteUserService = VoteUserService;
 //# sourceMappingURL=vote-user.service.js.map

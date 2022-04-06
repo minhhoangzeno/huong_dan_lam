@@ -20,17 +20,17 @@ let CategoryController = class CategoryController {
     constructor(categoryService) {
         this.categoryService = categoryService;
     }
-    async findAll() {
+    async getCategory() {
         return this.categoryService.findAll();
     }
-    async create(body) {
+    async addCategory(body) {
         return this.categoryService.create(body.title);
     }
-    async update(body, id) {
-        return this.categoryService.update(body.title, id);
+    async editCategory(categoryId, body) {
+        return this.categoryService.update(categoryId, body.title);
     }
-    async delete(id) {
-        return this.categoryService.delete(id);
+    async deleteCategory(categoryId) {
+        return this.categoryService.delete(categoryId);
     }
 };
 __decorate([
@@ -38,7 +38,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], CategoryController.prototype, "findAll", null);
+], CategoryController.prototype, "getCategory", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Post)('create'),
@@ -46,22 +46,24 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], CategoryController.prototype, "create", null);
+], CategoryController.prototype, "addCategory", null);
 __decorate([
-    (0, common_1.Post)('edit/:id'),
-    __param(0, (0, common_1.Body)()),
-    __param(1, (0, common_1.Param)('id')),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.Post)('edit/:categoryId'),
+    __param(0, (0, common_1.Param)('categoryId')),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
-], CategoryController.prototype, "update", null);
+], CategoryController.prototype, "editCategory", null);
 __decorate([
-    (0, common_1.Delete)('delete/:id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.Delete)('delete/:categoryId'),
+    __param(0, (0, common_1.Param)('categoryId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], CategoryController.prototype, "delete", null);
+], CategoryController.prototype, "deleteCategory", null);
 CategoryController = __decorate([
     (0, common_1.Controller)('category'),
     __metadata("design:paramtypes", [category_service_1.CategoryService])

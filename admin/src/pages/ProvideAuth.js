@@ -32,11 +32,14 @@ import Tables from "./components/Tables";
 import Tabs from "./components/Tabs";
 import Toasts from "./components/Toasts";
 import Tooltips from "./components/Tooltips";
+import Countdown from "./countdown/Countdown";
+import CountdownAdd from "./countdown/CountdownAdd";
+import CountdownEdit from "./countdown/CountdownEdit";
 import DashboardOverview from "./dashboard/DashboardOverview";
 import ChangePassword from "./examples/ChangePassword";
+import Feedback from "./feedback/Feedback";
 import Order from "./order/Order";
 import OrderDetail from "./order/OrderDetail";
-import OrderEdit from "./order/OrderEdit";
 import Product from "./product/Product";
 import ProductAdd from "./product/ProductAdd";
 import ProductDetail from "./product/ProductDetail";
@@ -44,6 +47,7 @@ import ProductEdit from "./product/ProductEdit";
 import Settings from './Settings';
 import BootstrapTables from "./tables/BootstrapTables";
 import Transactions from "./Transactions";
+import User from "./user/User";
 import Video from "./video/Video";
 import VideoAdd from "./video/VideoAdd";
 import VideoDetail from "./video/VideoDetail";
@@ -133,14 +137,19 @@ export default function ProvideAuth() {
             <RouteWithSidebar exact path={Routes.ProductEdit.path} component={ProductEdit} />
             <RouteWithSidebar exact path={Routes.ProductDetail.path} component={ProductDetail} />
 
+            <RouteWithSidebar exact path={Routes.Countdown.path} component={Countdown} />
+            <RouteWithSidebar exact path={Routes.CountdownAdd.path} component={CountdownAdd} />
+            <RouteWithSidebar exact path={Routes.CountdownEdit.path} component={CountdownEdit} />
             <RouteWithSidebar exact path={Routes.Category.path} component={Category} />
             <RouteWithSidebar exact path={Routes.CategoryAdd.path} component={CategoryAdd} />
             <RouteWithSidebar exact path={Routes.CategoryDetail.path} component={CategoryDetail} />
             <RouteWithSidebar exact path={Routes.CategoryEdit.path} component={CategoryEdit} />
 
+            <RouteWithSidebar exact path={Routes.User.path} component={User} />
+            <RouteWithSidebar exact path={Routes.Feedback.path} component={Feedback} />
+
             <RouteWithSidebar exact path={Routes.Order.path} component={Order} />
             <RouteWithSidebar exact path={Routes.OrderDetail.path} component={OrderDetail} />
-            <RouteWithSidebar exact path={Routes.OrderEdit.path} component={OrderEdit} />
 
             <Redirect from="/" to="/" />
         </Switch>

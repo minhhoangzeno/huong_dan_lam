@@ -18,8 +18,7 @@ let ProductModule = class ProductModule {
 ProductModule = __decorate([
     (0, common_1.Module)({
         imports: [mongoose_1.MongooseModule.forFeature([{ name: product_schemas_1.Product.name, schema: product_schemas_1.ProductSchema }]),
-            mongoose_1.MongooseModule.forFeature([{ name: category_schemas_1.Category.name, schema: category_schemas_1.CategorySchema }])
-        ],
+            mongoose_1.MongooseModule.forFeature([{ name: category_schemas_1.Category.name, schema: category_schemas_1.CategorySchema }])],
         controllers: [product_controller_1.ProductController],
         providers: [product_service_1.ProductService]
     })

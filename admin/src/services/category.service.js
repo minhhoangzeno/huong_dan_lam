@@ -1,7 +1,7 @@
 import { privateDeleteApi, privatePostApi, publicGetApi } from "../apis/API";
 
 export const getCategory = async () => {
-    let response = await publicGetApi('/category')
+    let response = await publicGetApi(`/category`)
     return response
 };
 
@@ -10,8 +10,8 @@ export const addCategory = async (data) => {
     return response
 };
 
-export const editCategory = async (blogId, data) => {
-    let response = await privatePostApi(`/category/edit/${blogId}`, data)
+export const editCategory = async (categoryId, data) => {
+    let response = await privatePostApi(`/category/edit/${categoryId}`, data)
     return response
 };
 export const detailCategory = async (data) => {

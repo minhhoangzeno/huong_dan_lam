@@ -18,8 +18,8 @@ export const dashboardDetailCountdown = async (countdownId) => {
 };
 
 
-export const dashboardOrder = async () => {
-    let response = await publicGetApi('/order');
+export const dashboardCountdown = async () => {
+    let response = await publicGetApi('/countdown');
     return response;
 };
 
@@ -27,5 +27,19 @@ export const dashboardOrder = async () => {
 
 export const dashboardVoteUser = async () => {
     let response = await publicGetApi('/vote-user');
+    return response;
+};
+
+
+
+
+export const dashboardOrderByAmount = async (dto) => {
+    let response = await publicGetApi(`/order/amount/${dto}`);
+    return response;
+};
+
+
+export const dashboardOrderByRevenue = async (dto) => {
+    let response = await publicGetApi(`/order/revenue/${dto}`);
     return response;
 };

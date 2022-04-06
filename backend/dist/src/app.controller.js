@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var _a, _b;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
@@ -28,7 +27,12 @@ let AppController = class AppController {
         return this.appService.sendEmail();
     }
     getImage(imagename, res) {
-        return (0, rxjs_1.of)(res.sendFile((0, path_1.join)(__dirname, '../../uploads/', imagename)));
+        if (imagename !== undefined) {
+            return (0, rxjs_1.of)(res.sendFile((0, path_1.join)(__dirname, '../../uploads/', imagename)));
+        }
+        else {
+            return (0, rxjs_1.of)(res.sendFile((0, path_1.join)(__dirname, '../../uploads/', "0ceab74e72410082339bf1cb19107c1074cba81daacac6fc05b75d4f5fcded30640280d0c9eacc41bd30dd8ffd9f90bb10a.jpeg")));
+        }
     }
     async uploadFile(file) {
         return file.filename;
@@ -55,7 +59,7 @@ __decorate([
     })),
     __param(0, (0, common_1.UploadedFile)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_b = typeof Express !== "undefined" && (_a = Express.Multer) !== void 0 && _a.File) === "function" ? _b : Object]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AppController.prototype, "uploadFile", null);
 AppController = __decorate([
