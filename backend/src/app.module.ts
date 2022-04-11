@@ -12,6 +12,7 @@ import { ProductModule } from './product/product.module';
 import { OrderModule } from './order/order.module';
 import { OrderProductModule } from './order-product/order-product.module';
 import { TagModule } from './tag/tag.module';
+import { TestModule } from './test/test.module';
 
 
 @Module({
@@ -25,7 +26,8 @@ import { TagModule } from './tag/tag.module';
     ProductModule,
     OrderModule,
     OrderProductModule,
-    TagModule
+    TagModule,
+    TestModule
   ],
   controllers: [AppController],
   providers: [AppService],
