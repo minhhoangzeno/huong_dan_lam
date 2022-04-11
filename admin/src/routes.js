@@ -75,4 +75,8 @@ export const Routes = {
     Order: { path: "/order" },
     OrderDetail: { path: "/order/detail" },
 
+    Tag: { path: "/tag" },
+    TagAdd: { path: "/tag/add" },
+    TagEdit: { path: "/tag/edit" }
+
 };

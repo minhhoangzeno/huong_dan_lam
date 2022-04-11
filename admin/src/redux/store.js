@@ -10,6 +10,7 @@ import userReducer from './userSlice';
 import feedbackReducer from './feedbackSlice';
 import categoryReducer from './categorySlice';
 import orderReducer from './orderSlice';
+import tagReducer from './tagSlice';
 //USE TOOLKIT
 const rootReducer = {
     reducer: {
@@ -23,7 +24,8 @@ const rootReducer = {
         user: userReducer,
         feedback: feedbackReducer,
         category: categoryReducer,
-        order: orderReducer
+        order: orderReducer,
+        tag: tagReducer
 
     },
 };

@@ -23,8 +23,8 @@ let ProductController = class ProductController {
     constructor(productService) {
         this.productService = productService;
     }
-    async getProduct(productId) {
-        return this.productService.findByCategory(productId);
+    async getProduct(categoryId, tagId) {
+        return this.productService.findByCategory(categoryId, tagId);
     }
     async uploadFile(file, body) {
         return this.productService.create(body, file.filename);
@@ -42,10 +42,11 @@ let ProductController = class ProductController {
     }
 };
 __decorate([
-    (0, common_1.Get)('/:productId'),
-    __param(0, (0, common_1.Param)('productId')),
+    (0, common_1.Get)('?'),
+    __param(0, (0, common_1.Query)('category')),
+    __param(1, (0, common_1.Query)('tag')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], ProductController.prototype, "getProduct", null);
 __decorate([

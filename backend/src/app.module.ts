@@ -11,6 +11,7 @@ import { CategoryModule } from './category/category.module';
 import { ProductModule } from './product/product.module';
 import { OrderModule } from './order/order.module';
 import { OrderProductModule } from './order-product/order-product.module';
+import { TagModule } from './tag/tag.module';
 
 
 @Module({
@@ -23,7 +24,8 @@ import { OrderProductModule } from './order-product/order-product.module';
     CategoryModule,
     ProductModule,
     OrderModule,
-    OrderProductModule
+    OrderProductModule,
+    TagModule
   ],
   controllers: [AppController],
   providers: [AppService],

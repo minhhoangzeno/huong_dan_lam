@@ -4,5 +4,6 @@ export class ProductDto {
   content: String;
   warn: String;
   animate: String;
-  category: String
+  category: String;
+  tag: String;
 }

@@ -24,12 +24,14 @@ let ProductService = class ProductService {
         this.productModel = productModel;
         this.categoryModel = categoryModel;
     }
-    async findByCategory(categoryId) {
-        return this.productModel.find({ category: categoryId });
+    async findByCategory(categoryId, tagId) {
+        console.log(categoryId, "-", tagId);
+        return this.productModel.find({ category: categoryId, tag: tagId });
     }
     async create(productDto, photoURL) {
         let product = new this.productModel();
         product.title = productDto.title;
+        product.tag = productDto.tag;
         product.category = productDto.category;
         product.price = productDto.price;
         product.content = productDto.content;
@@ -43,6 +45,7 @@ let ProductService = class ProductService {
         if (photoURL) {
             product.title = productDto.title;
             product.category = productDto.category;
+            product.tag = productDto.tag;
             product.price = productDto.price;
             product.content = productDto.content;
             product.warn = productDto.warn;

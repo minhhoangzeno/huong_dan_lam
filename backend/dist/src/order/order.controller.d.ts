@@ -1,3 +1,4 @@
+/// <reference types="mongoose" />
 import { OrderService } from './order.service';
 export declare class OrderController {
     private orderService;

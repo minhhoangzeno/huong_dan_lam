@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import * as mongoose from 'mongoose';
 import { Category } from 'src/category/schemas/category.schemas';
+import { Tag } from 'src/tag/schemas/tag.schemas';
 
 export type ProductDocument = Product & Document;
 
@@ -15,6 +16,9 @@ export class Product {
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Category' })
     category: Category;
+
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Tag' })
+    tag: Tag;
 
     @Prop({ required: true })
     price: Number;

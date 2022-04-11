@@ -4,7 +4,7 @@ import { ProductService } from './product.service';
 export declare class ProductController {
     private productService;
     constructor(productService: ProductService);
-    getProduct(productId: any): Promise<(import("./schemas/product.schemas").Product & import("mongoose").Document<any, any, any> & {
+    getProduct(categoryId: any, tagId: any): Promise<(import("./schemas/product.schemas").Product & import("mongoose").Document<any, any, any> & {
         _id: any;
     })[]>;
     uploadFile(file: Express.Multer.File, body: ProductDto): Promise<import("./schemas/product.schemas").Product & import("mongoose").Document<any, any, any> & {

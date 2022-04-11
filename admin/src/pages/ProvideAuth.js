@@ -46,6 +46,7 @@ import ProductDetail from "./product/ProductDetail";
 import ProductEdit from "./product/ProductEdit";
 import Settings from './Settings';
 import BootstrapTables from "./tables/BootstrapTables";
+import Tag from "./tag/Tag";
 import Transactions from "./Transactions";
 import User from "./user/User";
 import Video from "./video/Video";
@@ -150,6 +151,7 @@ export default function ProvideAuth() {
 
             <RouteWithSidebar exact path={Routes.Order.path} component={Order} />
             <RouteWithSidebar exact path={Routes.OrderDetail.path} component={OrderDetail} />
+            <RouteWithSidebar exact path={Routes.Tag.path} component={Tag} />
 
             <Redirect from="/" to="/" />
         </Switch>

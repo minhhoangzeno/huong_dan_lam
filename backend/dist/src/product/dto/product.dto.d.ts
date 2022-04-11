@@ -5,4 +5,5 @@ export declare class ProductDto {
     warn: String;
     animate: String;
     category: String;
+    tag: String;
 }

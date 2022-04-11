@@ -85,7 +85,7 @@ export default (props = {}) => {
               <NavItem title="Product" icon={faHandHoldingUsd} link={Routes.Product.path} />
 
               <Dropdown.Divider className="my-3 border-indigo" />
-
+              <NavItem title="Tag" icon={faHandHoldingUsd} link={Routes.Tag.path} />
               <NavItem title="Order" icon={faHandHoldingUsd} link={Routes.Order.path} />
             </Nav>
           </div>
