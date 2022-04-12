@@ -10,6 +10,8 @@ import userReducer from './userSlice';
 import voteUserReducer from './voteUserSlice'
 import feedbackReducer from './feedbackSlice';
 import commentReducer from './commentSlice';
+import categoryReducer from './categorySlice';
+import tagReducer from './tagSlice';
 //USE TOOLKIT
 const rootReducer = {
     reducer: {
@@ -23,7 +25,9 @@ const rootReducer = {
         user: userReducer,
         voteUser: voteUserReducer,
         feedback: feedbackReducer,
-        comment: commentReducer
+        comment: commentReducer,
+        category: categoryReducer,
+        tag: tagReducer
     },
 };
 

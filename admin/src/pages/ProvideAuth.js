@@ -47,6 +47,9 @@ import ProductEdit from "./product/ProductEdit";
 import Settings from './Settings';
 import BootstrapTables from "./tables/BootstrapTables";
 import Tag from "./tag/Tag";
+import TagAdd from "./tag/TagAdd";
+import TagEdit from "./tag/TagEdit";
+import TestAdd from "./test/TestAdd";
 import Transactions from "./Transactions";
 import User from "./user/User";
 import Video from "./video/Video";
@@ -151,7 +154,13 @@ export default function ProvideAuth() {
 
             <RouteWithSidebar exact path={Routes.Order.path} component={Order} />
             <RouteWithSidebar exact path={Routes.OrderDetail.path} component={OrderDetail} />
+
             <RouteWithSidebar exact path={Routes.Tag.path} component={Tag} />
+            <RouteWithSidebar exact path={Routes.TagAdd.path} component={TagAdd} />
+            <RouteWithSidebar exact path={Routes.TagEdit.path} component={TagEdit} />
+
+            <RouteWithSidebar exact path={Routes.TestAdd.path} component={TestAdd} />
+
 
             <Redirect from="/" to="/" />
         </Switch>

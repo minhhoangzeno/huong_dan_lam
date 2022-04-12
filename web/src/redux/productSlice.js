@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addProduct, deleteProduct, detailProduct, editProduct, getProduct } from '../services/product.service';
+import { addProduct, deleteProduct, detailProduct, editProduct, getProduct, getProductByCategory, getProductById, getProductByTag } from '../services/product.service';
 
 const initialState = {
     data: null,
@@ -30,7 +30,42 @@ export const getProductThunk = () => async (dispatch) => {
     try {
         const data = await getProduct();
         dispatch(setData(data))
+        return data;
+    } catch (err) {
+        dispatch(setError(err))
+    }
+    //done
+}
 
+export const getProductByCategoryThunk = (dto) => async (dispatch) => {
+
+    try {
+        const data = await getProductByCategory(dto);
+        dispatch(setData(data))
+        return data;
+    } catch (err) {
+        dispatch(setError(err))
+    }
+    //done
+}
+
+
+
+export const getProductByTagThunk = (dto) => async (dispatch) => {
+    try {
+        const data = await getProductByTag(dto);
+        return data;
+    } catch (err) {
+        dispatch(setError(err))
+    }
+    //done
+}
+
+
+
+export const getProductByIdThunk = (dto) => async (dispatch) => {
+    try {
+        const data = await getProductById(dto);
         return data;
     } catch (err) {
         dispatch(setError(err))

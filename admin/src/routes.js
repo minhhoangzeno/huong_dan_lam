@@ -77,6 +77,9 @@ export const Routes = {
 
     Tag: { path: "/tag" },
     TagAdd: { path: "/tag/add" },
-    TagEdit: { path: "/tag/edit" }
+    TagEdit: { path: "/tag/edit" },
+
+    TestAdd: { path: "/test/add" },
+
 
 };

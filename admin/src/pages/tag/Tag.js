@@ -21,7 +21,7 @@ export default () => {
     let resp = await dispatch(getCategoryThunk());
     if (resp) {
       setCategories(resp)
-      setCategory(resp[0]?._id)
+      setCategory(resp?.[0]?._id)
     }
   }
   let { addToast } = useToasts()
@@ -29,13 +29,18 @@ export default () => {
     search()
   }, []);
 
+  let searchTag = () => {
+    if (category) {
+      dispatch(getTagThunk(category)) // eslint-disable-next-line react-hooks/exhaustive-deps
+    }
+  }
   useEffect(() => {
-    dispatch(getTagThunk(category)) // eslint-disable-next-line react-hooks/exhaustive-deps
+    searchTag()
   }, [category]);
 
   let deleteTag = async (tagId) => {
     await dispatch(deleteTagThunk(tagId));
-
+    searchTag()
     addToast("Delete Success", { appearance: 'success', autoDismiss: 1000 })
   }
 

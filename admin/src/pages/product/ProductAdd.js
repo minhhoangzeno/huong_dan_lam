@@ -11,12 +11,16 @@ import { addProductThunk } from '../../redux/productSlice';
 import { Routes } from '../../routes';
 import { Editor } from '@tinymce/tinymce-react';
 import { tinyConfig } from '../../TiniConfigure';
+import { getTagThunk } from '../../redux/tagSlice';
 
 export default () => {
     const [file, setFile] = useState();
     const { control, handleSubmit, formState: { errors } } = useForm();
     let { addToast } = useToasts();
     let category = useSelector(state => state.category.data);
+    const [tags, setTags] = useState();
+    const [tag, setTag] = useState();
+
     const [categoryId, setCategoryId] = useState();
     const search = async () => {
         let resp = await dispatch(getCategoryThunk())
@@ -27,6 +31,19 @@ export default () => {
     useEffect(() => {
         search() // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const searchTags = async () => {
+        if (categoryId) {
+            let resp = await dispatch(getTagThunk(categoryId));
+            if (resp) {
+                setTags(resp);
+                setTag(resp[0]?._id)
+            }
+        }
+    }
+    useEffect(() => {
+        searchTags() // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [categoryId]);
     let history = useHistory();
     let dispatch = useDispatch();
     let addData = async (form) => {
@@ -37,6 +54,7 @@ export default () => {
         data.append("warn", form.warn);
         data.append("animate", form.animate);
         data.append("category", categoryId);
+        data.append("tag",tag)
         if (file) {
             data.append("file", file);
         }
@@ -74,6 +92,14 @@ export default () => {
                         <Form.Label>Danh mục</Form.Label>
                         <select onChange={e => setCategoryId(e.target.value)}  >
                             {category?.map((item, index) => {
+                                return <option key={index} value={item?._id} >{item.title}</option>
+                            })}
+                        </select>
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Tag</Form.Label>
+                        <select onChange={e => setTag(e.target.value)} value={tag}  >
+                            {tags?.map((item, index) => {
                                 return <option key={index} value={item?._id} >{item.title}</option>
                             })}
                         </select>

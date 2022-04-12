@@ -11,6 +11,7 @@ import feedbackReducer from './feedbackSlice';
 import categoryReducer from './categorySlice';
 import orderReducer from './orderSlice';
 import tagReducer from './tagSlice';
+import testReducer from './testSlice';
 //USE TOOLKIT
 const rootReducer = {
     reducer: {
@@ -25,7 +26,8 @@ const rootReducer = {
         feedback: feedbackReducer,
         category: categoryReducer,
         order: orderReducer,
-        tag: tagReducer
+        tag: tagReducer,
+        test: testReducer
 
     },
 };

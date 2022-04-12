@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Query, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
@@ -9,9 +9,24 @@ import { ProductService } from './product.service';
 export class ProductController {
   constructor(private productService: ProductService) { }
 
-  @Get('?')
-  async getProduct(@Query('category') categoryId, @Query('tag') tagId) {
-    return this.productService.findByCategory(categoryId, tagId);
+  @Get('/:categoryId')
+  async getProduct(@Param('categoryId') categoryId) {
+    return this.productService.findByCategory(categoryId);
+  }
+
+  @Get('detail/:productId')
+  async getProductById(@Param('productId') productId) {
+    return this.productService.findById(productId);
+  }
+
+  @Get('tag/:tagId')
+  async getProductByTag(@Param('tagId') tagId) {
+    return this.productService.findByTag(tagId);
+  }
+
+  @Get()
+  async getProductByDate() {
+    return this.productService.findByCreateDate();
   }
 
   @UseGuards(JwtAuthGuard)

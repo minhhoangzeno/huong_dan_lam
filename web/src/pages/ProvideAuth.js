@@ -18,6 +18,7 @@ import HistoryUserVote from "./client/HistoryUserVote";
 import HomePageClient from "./client/HomePageClient";
 import Payment from "./client/Payment";
 import ProductDetail from "./client/ProductDetail";
+import ProductTagPage from "./client/ProductTagPage";
 import Accordion from "./components/Accordion";
 import Alerts from "./components/Alerts";
 import Badges from "./components/Badges";
@@ -145,6 +146,9 @@ export default function ProvideAuth() {
 
             <RouteWithSidebar exact path={Routes.User.path} component={User} />
             <Route exact path={Routes.VoteUser.path} component={HistoryUserVote} />
+
+            <Route exact path={Routes.ProductTagPage.path} component={ProductTagPage} />
+
 
             <Redirect from="/" to="/" />
         </Switch>

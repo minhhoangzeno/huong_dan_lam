@@ -1,8 +1,10 @@
 import { Button, Container, Form, InputGroup, Row } from '@themesberg/react-bootstrap';
+import { Editor } from '@tinymce/tinymce-react';
 import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { SERVER } from '../../apis/API';
 import { Routes } from '../../routes';
+import { tinyConfig } from '../../TiniConfigure';
 
 export default () => {
     let history = useHistory()
@@ -24,20 +26,20 @@ export default () => {
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                         <Form.Label>Meta description</Form.Label>
-                        <InputGroup >
-                            <Form.Control as="textarea" rows={3} autoFocus disabled type="text"
-                                value={blog.metaDescription}
-                            />
-                        </InputGroup>
+                        <Editor apiKey="g8rgmljyc6ryhlggucq6jeqipl6tn5rnqym45lkfm235599i"
+                            init={tinyConfig}
+                            disabled
+                            value={blog?.metaDescription}
+                        />
                     </Form.Group>
 
-                    <Form.Group>
-                        <Form.Label>Content</Form.Label>
-                        <InputGroup >
-                            <Form.Control as="textarea" rows={10} autoFocus disabled type="text"
-                                value={blog.content}
-                            />
-                        </InputGroup>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Nội dung</Form.Label>
+                        <Editor apiKey="g8rgmljyc6ryhlggucq6jeqipl6tn5rnqym45lkfm235599i"
+                            init={tinyConfig}
+                            disabled
+                            value={blog?.content}
+                        />
                     </Form.Group>
 
                     <Form.Group className="mt-4" >

@@ -28,7 +28,7 @@ export default () => {
   return (
     <Container>
       <Row>
-        <h3 className="mb-3">Add Product</h3>
+        <h3 className="mb-3">Chi tiết Hoa</h3>
         <Form>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Tiêu đề</Form.Label>
@@ -50,6 +50,28 @@ export default () => {
                 required: true
               }}
               defaultValue={product.title}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Tag</Form.Label>
+            <Controller
+              control={control}
+              name="tag.title"
+              render={({
+                field: { onChange, onBlur, value }
+              }) => (
+                <InputGroup style={{ border: errors.title?.type === "required" && '1px solid red' }}>
+                  <Form.Control autoFocus required type="text" onChange={e => onChange(e.target.value)}
+                    onBlur={onBlur}
+                    value={value}
+                    disabled
+                  />
+                </InputGroup>
+              )}
+              rules={{
+                required: true
+              }}
+              defaultValue={product.tag.title}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicEmail">

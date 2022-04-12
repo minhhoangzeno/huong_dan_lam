@@ -1,31 +1,66 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import '../../scss/home.scss';
 import '../../scss/product-detail.scss';
+import Header from '../../components/layout/Header'
+import { SERVER } from '../../apis/API';
+import { useDispatch } from 'react-redux';
+import { getTagThunk } from '../../redux/tagSlice';
+import { Routes } from '../../routes';
+import { useToasts } from 'react-toast-notifications';
 export default () => {
+  const location = useLocation();
+  const history = useHistory();
+  const product = location.state;
+  let { addToast } = useToasts();
+  const addToCart = () => {
+    const cart = JSON.parse(localStorage.getItem('cart'));
+    if (cart) {
+      let isProductCart = cart.filter(item => item.cartId == product._id);
+      if (isProductCart.length > 0) {
+        addToast("Sản phẩm đã có trong giỏ hàng", { appearance: 'warning', autoDismiss: '1000' })
+      } else {
+        cart.push({
+          cartId: product._id,
+          amount: 1,
+          price: product?.price
+        });
+        localStorage.setItem("cart", JSON.stringify(cart))
+        addToast("Thêm vào giỏ hàng thành công", { appearance: 'success', autoDismiss: '1000' })
+        history.push(Routes.Cart.path)
+
+      }
+    } else {
+      let cartNew = [];
+      cartNew.push({
+        cartId: product._id,
+        amount: 1,
+        price: product?.price
+      });
+      localStorage.setItem("cart", JSON.stringify(cartNew))
+      addToast("Thêm vào giỏ hàng thành công", { appearance: 'success', autoDismiss: '1000' })
+      history.push(Routes.Cart.path)
+    }
+
+  }
   return (
     <>
       <>
+        <Header />
         <section className="detail">
           <div className="container ">
             <ul className="crumbs">
               <li>
                 <h4>
                   <a className="crumbs-items" href='/#' >
-                    Trang chủ
+                    {product?.category?.title}
                   </a>
                 </h4>
               </li>
               <li>
                 <h4>
                   <a className="crumbs-items" href="/#">
-                    Bộ sưu tập
-                  </a>
-                </h4>
-              </li>
-              <li>
-                <h4>
-                  <a className="crumbs-items1" href="/#">
-                    Khuyến mãi
+                    {product?.tag?.title}
                   </a>
                 </h4>
               </li>
@@ -33,91 +68,47 @@ export default () => {
             <div className="detail-content">
               <div className="detail-content__img">
                 <img
-                  src="https://hyt.r.worldssl.net/hinh-hoa-tuoi/hoa-khuyen-mai/10708_you-are-beautiful.jpg"
+                  src={`${SERVER.URL_IMAGE}${product?.photoURL}`}
                   alt="product"
                 />
-                <div className="view-real">
-                  <a href="/#">Xem ảnh thực tế</a>
-                </div>
+
               </div>
               <div className="detail-content__product">
-                <h2>Khuyến mãi-You are beautiful-10708</h2>
+                <h2>{product?.title}</h2>
                 <div className="single-price">
-                  <span className="old-price">950.000 đ</span>
-                  <span className="price">750.000 đ</span>
+                  <span className="price">{product?.price} đ</span>
                 </div>
-                <p className="vat">Giá đã bao gồm 8% VAT</p>
-                <div className="summary">
-                  "Là phụ nữ hãy sống như cây như hoa. Dù không ai nhìn ngắm chiêm
-                  ngưỡng vẫn luôn xanh tươi và nở rộ". Một nửa thế giới này là phụ nữ
-                  vì thế hay luôn yêu quý họ và dành tặng cho họ những điều tuyệt vời
-                  nhất bởi vì họ đều là những đoá hoa mỗi ngày tô điểm cho cuộc sống
-                  này thêm xinh đẹp hơn.
+                <div className="summary" dangerouslySetInnerHTML={{ __html: product?.content }} >
+
                 </div>
-                <h4>Sản phẩm bao gồm:</h4>
-                <ul className="material">
-                  <li>Cát tường trắng: 5</li>
-                  <li>Cúc calimero trắng: 6</li>
-                  <li>Hoa Sao tím: 2</li>
-                  <li>Hồng đỏ sa : 22</li>
-                  <li>Lá đuôi chồn : 5</li>
-                </ul>
-                <p>
-                  <i>
-                    Sản phẩm thực nhận có thể khác với hình đại diện trên website (đặc
-                    điểm thủ công và tính chất tự nhiên của hàng nông nghiệp)
-                  </i>
-                </p>
                 <div className="attention">
                   <h4>LƯU Ý</h4>
-                  <p>Sản phẩm bạn đang chọn là sản phẩm được thiết kế đăc biệt!</p>
-                  <p>
-                    Hiện nay, Hoayeuthuong.com chỉ thử nghiệm cung cấp cho thị trường{" "}
-                    <strong>Tp. Hồ Chí Minh và Hà Nội</strong>
-                  </p>
+                  <p dangerouslySetInnerHTML={{ __html: product?.warn }} ></p>
                 </div>
-                <div className="area-order">
+                {/* <div className="area-order">
                   <a href="/#" className="add-cart on-hand">
                     Giỏ hàng đã có
                   </a>
                   <a href="/#" className="buy-now">
                     Mua ngay
                   </a>
-                </div>
+                </div> */}
                 <div className="on-phone">
-                  <a href="/#" className="call-now">
-                    Gọi ngay: 1800 6353
-                  </a>
+                  <div className="call-now"
+                    onClick={() => {
+                      addToCart()
+                    }}
+                  >
+                    Thêm vào giỏ
+                  </div>
                 </div>
                 <div className="offer">
                   <h4>ƯU ĐÃI ĐẶC BIỆT</h4>
-                  <ul className="benefit">
-                    <li>Tặng Banner Hoặc Thiệp (Trị Giá 20.000đ) Miễn Phí</li>
-                    <li>Giảm Ngay 20.000đ Khi Bạn Tạo Đơn Hàng Online</li>
-                    <li>
-                      Giảm Tiếp 3% Cho Đơn Hàng Bạn Tạo ONLINE Lần Thứ 2, 5% Cho Đơn
-                      Hàng Bạn Tạo ONLINE Lần Thứ 6 Và 10% Cho Đơn Hàng Bạn Tạo ONLINE
-                      Lần Thứ 12 (Chỉ Áp Dụng Tại Tp. HCM Và Hà Nội)
-                    </li>
-                    <li>Giao Miễn Phí Trong Nội Thành 63/63 Tỉnh</li>
-                    <li>Giao Gấp Trong Vòng 2 Giờ</li>
-                    <li>Cam Kết 100% Hoàn Lại Tiền Nếu Bạn Không Hài Lòng</li>
-                    <li>Cam Kết Hoa Tươi Trên 3 Ngày</li>
+                  <ul className="benefit" dangerouslySetInnerHTML={{ __html: product?.animate }} >
+
                   </ul>
                 </div>
-                <div className="sp-item">
-                  <h2>CÁC NHÓM HOA</h2>
-                  <a href="/#">Hoa sinh nhật</a>
-                  <a href="/#">Hoa tình yêu</a>
-                  <a href="/#">Hoa tặng người yêu</a>
-                  <a href="/#">Hoa tặng vợ</a>
-                  <a href="/#">Hoa tặng mẹ</a>
-                  <a href="/#">Hoa tặng cho nữ</a>
-                  <a href="/#">Hoatặng đồng nghiệp</a>
-                  <a href="/#">Giỏ hoa tươi</a>
-                  <a href="/#">Hoa hồng</a>
-                  <a href="/#">Màu đỏ</a>
-                </div>
+                <TagProduct product={product} />
               </div>
             </div>
           </div>
@@ -289,6 +280,42 @@ export default () => {
         </section>
       </>
 
+    </>
+  )
+}
+
+
+function TagProduct({ product }) {
+  const [tags, setTags] = useState();
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const searchTags = async () => {
+    let resp = await dispatch(getTagThunk(product?.category?._id));
+    if (resp) {
+      setTags(resp)
+    }
+  }
+  useEffect(() => {
+    searchTags()
+  }, [product?.category?._id])
+  return (
+    <>
+      <div className="sp-item">
+        <h2>CÁC NHÓM HOA</h2>
+        {tags && tags?.map((item, index) => {
+          return (
+            <div
+              style={{ cursor: 'pointer' }}
+              onClick={() => {
+                history.push({
+                  pathname: Routes.ProductTagPage.path,
+                  state: item
+                })
+              }}
+              key={index} >{item?.title}</div>
+          )
+        })}
+      </div>
     </>
   )
 }

@@ -1,196 +1,119 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { SERVER } from '../../apis/API';
+import { getCategoryThunk } from '../../redux/categorySlice';
+import { getProductByCategoryThunk } from '../../redux/productSlice';
+import { Routes } from '../../routes';
 export default () => {
+  const [productBottoms, setProductBottoms] = useState();
+  const history = useHistory();
+  const [productTops, setProductTops] = useState();
+  const [category, setCategory] = useState();
+  const dispatch = useDispatch();
+  const searchCategory = async () => {
+    let resp = await dispatch(getCategoryThunk());
+    if (resp) {
+      let respCategory = resp?.filter(item => item.title == "Hoa Tươi")[0];
+      if (respCategory) {
+        setCategory(respCategory)
+      }
+    }
+  }
+  const searchProducts = async () => {
+    if (category) {
+      let respProducts = await dispatch(getProductByCategoryThunk(category?._id))
+      if (respProducts) {
+        let respProductTops = [];
+        let respProductBottoms = [];
+        respProducts.map((item, index) => {
+          if (index < 5) {
+            respProductTops.push(item)
+          } else {
+            respProductBottoms.push(item)
+          }
+        })
+        setProductTops(respProductTops);
+        setProductBottoms(respProductBottoms);
+      }
+    }
+
+  }
+  useEffect(() => {
+    searchCategory()
+  }, [])
+  useEffect(() => {
+    searchProducts()
+  }, [category])
   return (
     <>
       <section className="promotion">
         <div className="container block-container">
           <h5>
-            <a href="/#">KHUYẾN MÃI</a>
+            <a href="/#">{category?.title}</a>
           </h5>
           <div className="block-sale">
             <div className="flower-sale row">
-              <div className="flower-sale_item col-12 col-md-6 col-lg-4 col-xl-2">
-                <div className="block-item">
-                  <img
-                    src="	https://hyt.r.worldssl.net/hinh-hoa-tuoi/thumb/hoa-khuyen-mai/11043_sweet-rossie.jpg"
-                    alt="sale"
-                  />
-                  <br />
-                </div>
-                <div className="name-cost">
-                  <span>SWEET ROSSIE</span>
-                  <br />
-                  <span>
-                    <em className="vn">1.500.000 đ</em>
-                    <em style={{ color: "red" }}>1.100.002</em>
-                  </span>
-                </div>
-                <span className="isale">SALE</span>
-              </div>
-              <div className="flower-sale_item col-12 col-md-6 col-lg-4 col-xl-2">
-                <div className="block-item">
-                  <img
-                    src="	https://hyt.r.worldssl.net/hinh-hoa-tuoi/thumb/hoa-khuyen-mai/11044_hanh-phuc-bat-tan-2.jpg"
-                    alt="sale"
-                  />
-                  <br />
-                </div>
-                <div className="name-cost">
-                  <span>Hạnh phúc bất tận 2</span>
-                  <br />
-                  <span>
-                    {/* <em class="vn">1.500.000 đ</em> */}
-                    <em style={{ color: "red" }}>1.500.000</em>
-                  </span>
-                </div>
-                <span className="isale">SALE</span>
-              </div>
-              <div className="flower-sale_item col-12 col-md-6 col-lg-4 col-xl-2">
-                <div className="block-item">
-                  <img
-                    src="	https://hyt.r.worldssl.net/hinh-hoa-tuoi/thumb/hoa-khuyen-mai/11674_binh-hong-do-sa-30.jpg"
-                    alt="sale"
-                  />
-                  <br />
-                </div>
-                <div className="name-cost">
-                  <span>Bình hồng đỏ sao 30</span>
-                  <br />
-                  <span>
-                    <em className="vn">1.500.000 đ</em>
-                    <em style={{ color: "red" }}>1.100.002</em>
-                  </span>
-                </div>
-                <span className="isale">SALE</span>
-              </div>
-              <div className="flower-sale_item col-12 col-md-6 col-lg-4 col-xl-2">
-                <div className="block-item">
-                  <img
-                    src="	https://hyt.r.worldssl.net/hinh-hoa-tuoi/thumb/hoa-khuyen-mai/11678_binh-hong-song-hy-co.jpg"
-                    alt="sale"
-                  />
-                  <br />
-                </div>
-                <div className="name-cost">
-                  <span>SWEET ROSSIE</span>
-                  <br />
-                  <span>
-                    <em className="vn">1.500.000 đ</em>
-                    <em style={{ color: "red" }}>1.100.002</em>
-                  </span>
-                </div>
-                <span className="isale">SALE</span>
-              </div>
-              <div className="flower-sale_item col-12 col-md-6 col-lg-4 col-xl-2">
-                <div className="block-item">
-                  <img
-                    src="	https://hyt.r.worldssl.net/hinh-hoa-tuoi/thumb/hoa-khuyen-mai/11673_binh-hong-vang-at-30.jpg"
-                    alt="sale"
-                  />
-                  <br />
-                </div>
-                <div className="name-cost">
-                  <span>SWEET ROSSIE</span>
-                  <br />
-                  <span>
-                    <em className="vn">1.500.000 đ</em>
-                    <em style={{ color: "red" }}>1.100.002</em>
-                  </span>
-                </div>
-                <span className="isale">SALE</span>
-              </div>
+              {productTops && productTops?.map((item, index) => {
+                return (
+                  <div className="flower-sale_item col-12 col-md-6 col-lg-4 col-xl-2" key={index}
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => {
+                      history.push({
+                        pathname: Routes.ProductDetail.path,
+                        state: item
+                      })
+                    }}
+                  >
+                    <div className="block-item" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
+                      <img
+                        src={`${SERVER.URL_IMAGE}${item?.photoURL}`}
+                        alt="sale"
+                        width={120}
+                        height={80}
+                      />
+                      <br />
+                    </div>
+                    <div className="name-cost">
+                      <p className="name-cost__title" >{item?.title}</p>
+                      <span>
+                        <em style={{ color: "red" }}>{item?.price}</em>
+                      </span>
+                    </div>
+                  </div>
+                )
+              })}
             </div>
             <div className="flower-sale__2">
-              <div className="flower-sale_item col-12 col-md-6 col-lg-4 col-xl-2">
-                <div className="block-item">
-                  <img
-                    src="	https://hyt.r.worldssl.net/hinh-hoa-tuoi/thumb/hoa-khuyen-mai/11043_sweet-rossie.jpg"
-                    alt="sale"
-                  />
-                  <br />
-                </div>
-                <div className="name-cost">
-                  <span>SWEET ROSSIE</span>
-                  <br />
-                  <span>
-                    <em className="vn">1.500.000 đ</em>
-                    <em style={{ color: "red" }}>1.100.002</em>
-                  </span>
-                </div>
-                {/* <span class="isale">SALE</span> */}
-              </div>
-              <div className="flower-sale_item col-12 col-md-6 col-lg-4 col-xl-2">
-                <div className="block-item">
-                  <img
-                    src="	https://hyt.r.worldssl.net/hinh-hoa-tuoi/thumb/hoa-khuyen-mai/11044_hanh-phuc-bat-tan-2.jpg"
-                    alt="sale"
-                  />
-                  <br />
-                </div>
-                <div className="name-cost">
-                  <span>Hạnh phúc bất tận 2</span>
-                  <br />
-                  <span>
-                    {/* <em class="vn">1.500.000 đ</em> */}
-                    <em style={{ color: "red" }}>1.500.000</em>
-                  </span>
-                </div>
-                <span className="isale">SALE</span>
-              </div>
-              <div className="flower-sale_item col-12 col-md-6 col-lg-4 col-xl-2">
-                <div className="block-item">
-                  <img
-                    src="	https://hyt.r.worldssl.net/hinh-hoa-tuoi/thumb/hoa-khuyen-mai/11674_binh-hong-do-sa-30.jpg"
-                    alt="sale"
-                  />
-                  <br />
-                </div>
-                <div className="name-cost">
-                  <span>Bình hồng đỏ sao 30</span>
-                  <br />
-                  <span>
-                    <em className="vn">1.500.000 đ</em>
-                    <em style={{ color: "red" }}>1.100.002</em>
-                  </span>
-                </div>
-                <span className="isale">SALE</span>
-              </div>
-              <div className="flower-sale_item col-12 col-md-6 col-lg-4 col-xl-2">
-                <div className="block-item">
-                  <img
-                    src="	https://hyt.r.worldssl.net/hinh-hoa-tuoi/thumb/hoa-khuyen-mai/11678_binh-hong-song-hy-co.jpg"
-                    alt="sale"
-                  />
-                  <br />
-                </div>
-                <div className="name-cost">
-                  <span>SWEET ROSSIE</span>
-                  <br />
-                  <span>
-                    <em className="vn">1.500.000 đ</em>
-                    <em style={{ color: "red" }}>1.100.002</em>
-                  </span>
-                </div>
-                <span className="isale">SALE</span>
-              </div>
-              <div className="flower-sale_item col-12 col-md-6 col-lg-4 col-xl-2">
-                <div className="block-item">
-                  <img
-                    src="	https://hyt.r.worldssl.net/hinh-hoa-tuoi/thumb/hoa-khuyen-mai/11673_binh-hong-vang-at-30.jpg"
-                    alt="sale"
-                  />
-                  <br />
-                </div>
-                <div className="name-cost">
-                  <span>SWEET ROSSIE</span>
-                  <br />
-                  <span>
-                    <em className="vn">1.500.000 đ</em>
-                    <em style={{ color: "red" }}>1.100.002</em>
-                  </span>
-                </div>
-                <span className="isale">SALE</span>
-              </div>
+              {productBottoms && productBottoms?.map((item, index) => {
+                return (
+                  <div className="flower-sale_item col-12 col-md-6 col-lg-4 col-xl-2" key={index}
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => {
+                      history.push({
+                        pathname: Routes.ProductDetail.path,
+                        state: item
+                      })
+                    }}
+                  >
+                    <div className="block-item" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
+                      <img
+                        src={`${SERVER.URL_IMAGE}${item?.photoURL}`}
+                        alt="sale"
+                        width={120}
+                        height={80}
+                      />
+                      <br />
+                    </div>
+                    <div className="name-cost">
+                      <p className="name-cost__title" >{item?.title}</p>
+                      <span>
+                        <em style={{ color: "red" }}>{item?.price}</em>
+                      </span>
+                    </div>
+                  </div>
+                )
+              })}
             </div>
           </div>
         </div>

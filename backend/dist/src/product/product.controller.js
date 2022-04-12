@@ -23,8 +23,17 @@ let ProductController = class ProductController {
     constructor(productService) {
         this.productService = productService;
     }
-    async getProduct(categoryId, tagId) {
-        return this.productService.findByCategory(categoryId, tagId);
+    async getProduct(categoryId) {
+        return this.productService.findByCategory(categoryId);
+    }
+    async getProductById(productId) {
+        return this.productService.findById(productId);
+    }
+    async getProductByTag(tagId) {
+        return this.productService.findByTag(tagId);
+    }
+    async getProductByDate() {
+        return this.productService.findByCreateDate();
     }
     async uploadFile(file, body) {
         return this.productService.create(body, file.filename);
@@ -42,13 +51,32 @@ let ProductController = class ProductController {
     }
 };
 __decorate([
-    (0, common_1.Get)('?'),
-    __param(0, (0, common_1.Query)('category')),
-    __param(1, (0, common_1.Query)('tag')),
+    (0, common_1.Get)('/:categoryId'),
+    __param(0, (0, common_1.Param)('categoryId')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], ProductController.prototype, "getProduct", null);
+__decorate([
+    (0, common_1.Get)('detail/:productId'),
+    __param(0, (0, common_1.Param)('productId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ProductController.prototype, "getProductById", null);
+__decorate([
+    (0, common_1.Get)('tag/:tagId'),
+    __param(0, (0, common_1.Param)('tagId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ProductController.prototype, "getProductByTag", null);
+__decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ProductController.prototype, "getProductByDate", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Post)('create'),

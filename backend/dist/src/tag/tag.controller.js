@@ -55,7 +55,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], TagController.prototype, "edit", null);
 __decorate([
-    (0, common_1.Delete)('remove/:tagId'),
+    (0, common_1.Delete)('delete/:tagId'),
     __param(0, (0, common_1.Param)('tagId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

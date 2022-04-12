@@ -21,7 +21,7 @@ export class TagController {
     return this.tagService.edit(tagId, body.category, body.title)
   }
 
-  @Delete('remove/:tagId')
+  @Delete('delete/:tagId')
   async remove(@Param('tagId') tagId) {
     return this.tagService.delete(tagId)
   }

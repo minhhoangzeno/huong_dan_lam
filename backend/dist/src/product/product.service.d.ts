@@ -5,7 +5,16 @@ export declare class ProductService {
     private productModel;
     private categoryModel;
     constructor(productModel: Model<ProductDocument>, categoryModel: Model<CategoryDocument>);
-    findByCategory(categoryId: any, tagId: any): Promise<(Product & import("mongoose").Document<any, any, any> & {
+    findByCategory(categoryId: any): Promise<(Product & import("mongoose").Document<any, any, any> & {
+        _id: any;
+    })[]>;
+    findById(productId: any): Promise<Product & import("mongoose").Document<any, any, any> & {
+        _id: any;
+    }>;
+    findByTag(tagId: any): Promise<(Product & import("mongoose").Document<any, any, any> & {
+        _id: any;
+    })[]>;
+    findByCreateDate(): Promise<(Product & import("mongoose").Document<any, any, any> & {
         _id: any;
     })[]>;
     create(productDto: any, photoURL: string): Promise<Product & import("mongoose").Document<any, any, any> & {

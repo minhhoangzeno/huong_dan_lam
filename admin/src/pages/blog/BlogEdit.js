@@ -1,6 +1,7 @@
 import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Container, Form, InputGroup, Row } from '@themesberg/react-bootstrap';
+import { Editor } from '@tinymce/tinymce-react';
 import React, { useState } from 'react';
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch } from 'react-redux';
@@ -9,6 +10,7 @@ import { useToasts } from 'react-toast-notifications';
 import { SERVER } from '../../apis/API';
 import { editBlogThunk } from '../../redux/blogSlice';
 import { Routes } from '../../routes';
+import { tinyConfig } from '../../TiniConfigure';
 
 export default () => {
     let location = useLocation();
@@ -26,7 +28,7 @@ export default () => {
         if (file) {
             data.append("file", file);
         }
-        dispatch(editBlogThunk(blog._id,data))
+        dispatch(editBlogThunk(blog._id, data))
         addToast("Success", { appearance: 'success', autoDismiss: 1000 });
         history.push(Routes.Blog.path)
     }
@@ -56,47 +58,45 @@ export default () => {
                             defaultValue={blog.title}
                         />
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                        <Form.Label>Meta description</Form.Label>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Mô tả ngắn gọn</Form.Label>
                         <Controller
                             control={control}
-                            name="metaDescription"
-                            render={({
-                                field: { onChange, onBlur, value }
-                            }) => (
-                                <InputGroup style={{ border: errors.metaDescription?.type === "required" && '1px solid red' }}>
-                                    <Form.Control as="textarea" rows={3} autoFocus required type="text" onChange={e => onChange(e.target.value)}
-                                        onBlur={onBlur}
-                                        value={value}
-                                    />
-                                </InputGroup>
+                            render={({ field: { onChange, onBlur, value } }) => (
+                                <Editor apiKey="g8rgmljyc6ryhlggucq6jeqipl6tn5rnqym45lkfm235599i"
+                                    init={tinyConfig}
+                                    onEditorChange={(event) => {
+                                        onChange(event)
+                                    }}
+                                    onBlur={onBlur}
+                                    value={value}
+
+                                />
                             )}
-                            rules={{
-                                required: true
-                            }}
+                            name="metaDescription"
                             defaultValue={blog.metaDescription}
+                            rules={{ required: true }}
                         />
                     </Form.Group>
 
-                    <Form.Group>
-                        <Form.Label>Content</Form.Label>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Nội dung</Form.Label>
                         <Controller
                             control={control}
-                            name="content"
-                            render={({
-                                field: { onChange, onBlur, value }
-                            }) => (
-                                <InputGroup style={{ border: errors.content?.type === "required" && '1px solid red' }}>
-                                    <Form.Control as="textarea" rows={10} autoFocus required type="text" onChange={e => onChange(e.target.value)}
-                                        onBlur={onBlur}
-                                        value={value}
-                                    />
-                                </InputGroup>
+                            render={({ field: { onChange, onBlur, value } }) => (
+                                <Editor apiKey="g8rgmljyc6ryhlggucq6jeqipl6tn5rnqym45lkfm235599i"
+                                    init={tinyConfig}
+                                    onEditorChange={(event) => {
+                                        onChange(event)
+                                    }}
+                                    onBlur={onBlur}
+                                    value={value}
+
+                                />
                             )}
-                            rules={{
-                                required: true
-                            }}
-                            defaultValue={blog.content}
+                            name="content"
+                            defaultValue={blog?.content}
+                            rules={{ required: true }}
                         />
                     </Form.Group>
 

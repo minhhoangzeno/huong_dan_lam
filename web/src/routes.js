@@ -52,6 +52,7 @@ export const Routes = {
 
     Product: { path: "/product" },
     ProductAdd: { path: "/product/add" },
+
     ProductEdit: { path: "/product/edit" },
     ProductDetail: { path: "/product/detail" },
 
@@ -70,5 +71,8 @@ export const Routes = {
 
     Payment: { path: "/payment" },
     Cart: { path: "/cart" },
+
+    ProductTagPage: { path: "/tag" },
+
 
 };

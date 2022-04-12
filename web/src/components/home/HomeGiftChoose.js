@@ -1,210 +1,116 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { SERVER } from '../../apis/API';
+import { getCategoryThunk } from '../../redux/categorySlice';
+import { getProductByCategoryThunk, getProductThunk } from '../../redux/productSlice';
 export default () => {
+  const [productBottoms, setProductBottoms] = useState();
+  const [productTops, setProductTops] = useState();
+  const [category, setCategory] = useState();
+  const dispatch = useDispatch();
+  const searchCategory = async () => {
+    let resp = await dispatch(getCategoryThunk());
+    if (resp) {
+      let respCategory = resp?.filter(item => item.title == "Quà tặng")[0];
+      if (respCategory) {
+        setCategory(respCategory)
+      }
+    }
+  }
+  const searchProducts = async () => {
+    if (category) {
+      let respProducts = await dispatch(getProductByCategoryThunk(category?._id))
+      if (respProducts) {
+        let respProductTops = [];
+        let respProductBottoms = [];
+        respProducts.map((item, index) => {
+          if (index < 5) {
+            respProductTops.push(item)
+          } else {
+            respProductBottoms.push(item)
+          }
+        })
+        setProductTops(respProductTops);
+        setProductBottoms(respProductBottoms);
+      }
+    }
+
+  }
+  useEffect(() => {
+    searchCategory()
+  }, [])
+  useEffect(() => {
+    searchProducts()
+  }, [category])
   return (
     <>
+      <div className="container gift-add">
+        <h2 className="gift-title">{category?.title}</h2>
+        {/* <div className="gift-tile__link">
+          <a href="/#">Bánh kem Tous les Jours</a>
+          <a href="/#">Chocolate</a>
+          <a href="/#">Bánh kem Brodard</a>
+          <a href="/#">Trái cây</a>
+          <a href="/#">Qùa tặng kèm</a>
+        </div> */}
+      </div>
       <section className="gift-choose">
         <div className="container box-gift">
           <div className="gift-choose__item row">
-            <div className="col-12 col-md-6 col-lg-4 col-xl-2">
-              <div className="box-item">
-                <div className="img-gift">
-                  <img
-                    src="	https://hyt.r.worldssl.net/hinh-hoa-tuoi/thumb/gau-bong/11229_teddy-ao-non-vang.jpg"
-                    alt="bear"
-                  />
-                </div>
-                <div className="cost-name">
-                  <div className="gift-name">
-                    <a href="/#">Teddy áo nón vàng</a>
-                  </div>
-                  <div className="gift-cost">
-                    <span>220.000 đ</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-12 col-md-6 col-lg-4 col-xl-2">
-              <div className="box-item">
-                <div className="img-gift">
-                  <img
-                    src="	https://hyt.r.worldssl.net/hinh-hoa-tuoi/thumb/gau-bong/7974_teddy-nguc-qua-thom.jpg
-                      "
-                    alt="bear"
-                  />
-                </div>
-                <div className="cost-name">
-                  <div className="gift-name">
-                    <a href="/#">Teddy áo nón vàng</a>
-                  </div>
-                  <div className="gift-cost">
-                    <span>220.000 đ</span>
+            {productTops && productTops?.map((item, index) => {
+              return (
+                <div className="col-12 col-md-6 col-lg-4 col-xl-2" key={index} >
+                  <div className="box-item">
+                    <div className="img-gift" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
+                      <img
+                        src={`${SERVER.URL_IMAGE}${item?.photoURL}`}
+                        alt="bear"
+                        width={120}
+                        height={80}
+                      />
+                    </div>
+                    <div className="cost-name">
+                      <div className="gift-name">
+                        <a href="/#">{item?.title}</a>
+                      </div>
+                      <div className="gift-cost">
+                        <span>{item?.price} đ</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div className="col-12 col-md-6 col-lg-4 col-xl-2">
-              <div className="box-item">
-                <div className="img-gift">
-                  <img
-                    src="	https://hyt.r.worldssl.net/hinh-hoa-tuoi/thumb/gau-bong/12245_bup-be-vay-yem.jpg"
-                    alt="bear"
-                  />
-                </div>
-                <div className="cost-name">
-                  <div className="gift-name">
-                    <a href="/#">Teddy áo nón vàng</a>
-                  </div>
-                  <div className="gift-cost">
-                    <span>220.000 đ</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-12 col-md-6 col-lg-4 col-xl-2">
-              <div className="box-item">
-                <div className="img-gift">
-                  <img
-                    src="	https://hyt.r.worldssl.net/hinh-hoa-tuoi/thumb/so-co-la-d-art/12751_i-love-you-9.jpg"
-                    alt="bear"
-                  />
-                </div>
-                <div className="cost-name">
-                  <div className="gift-name">
-                    <a href="/#">Teddy áo nón vàng</a>
-                  </div>
-                  <div className="gift-cost">
-                    <span>220.000 đ</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-12 col-md-6 col-lg-4 col-xl-2">
-              <div className="box-item">
-                <div className="img-gift">
-                  <img
-                    src="	https://hyt.r.worldssl.net/hinh-hoa-tuoi/thumb/gau-bong/12244_rong-benzamin-ngoi.jpg
-                      "
-                    alt="bear"
-                  />
-                </div>
-                <div className="cost-name">
-                  <div className="gift-name">
-                    <a href="/#">Teddy áo nón vàng</a>
-                  </div>
-                  <div className="gift-cost">
-                    <span>220.000 đ</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+              )
+            })}
+
           </div>
           <div className="gift-choose__item gift-2 row">
-            <div className="col-12 col-md-6 col-lg-4 col-xl-2">
-              <div className="box-item">
-                <div className="img-gift">
-                  <img
-                    src="	https://hyt.r.worldssl.net/hinh-hoa-tuoi/thumb/so-co-la-d-art/12753_chocolate-heart-9.jpg"
-                    alt="bear"
-                  />
-                </div>
-                <div className="cost-name">
-                  <div className="gift-name">
-                    <a href="/#">Teddy áo nón vàng</a>
-                  </div>
-                  <div className="gift-cost">
-                    <span>220.000 đ</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-12 col-md-6 col-lg-4 col-xl-2">
-              <div className="box-item">
-                <div className="img-gift">
-                  <img
-                    src="	https://hyt.r.worldssl.net/hinh-hoa-tuoi/thumb/trai-cay/3742_fresh-fruit-4.jpg"
-                    alt="bear"
-                  />
-                </div>
-                <div className="cost-name">
-                  <div className="gift-name">
-                    <a href="/#">Teddy áo nón vàng</a>
-                  </div>
-                  <div className="gift-cost">
-                    <span>220.000 đ</span>
+            {productBottoms && productBottoms?.map((item, index) => {
+              return (
+                <div className="col-12 col-md-6 col-lg-4 col-xl-2" key={index} >
+                  <div className="box-item">
+                    <div className="img-gift" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
+                      <img
+                        src={`${SERVER.URL_IMAGE}${item?.photoURL}`}
+                        alt="bear"
+                        width={120}
+                        height={80}
+                      />
+                    </div>
+                    <div className="cost-name">
+                      <div className="gift-name">
+                        <a href="/#">{item?.title}</a>
+                      </div>
+                      <div className="gift-cost">
+                        <span>{item?.price} đ</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div className="col-12 col-md-6 col-lg-4 col-xl-2">
-              <div className="box-item">
-                <div className="img-gift">
-                  <img
-                    src="	https://hyt.r.worldssl.net/hinh-hoa-tuoi/thumb/banh-kem-tous-les-jours/8434_square-choco-2.jpg"
-                    alt="bear"
-                  />
-                </div>
-                <div className="cost-name">
-                  <div className="gift-name">
-                    <a href="/#">Teddy áo nón vàng</a>
-                  </div>
-                  <div className="gift-cost">
-                    <span>220.000 đ</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-12 col-md-6 col-lg-4 col-xl-2">
-              <div className="box-item">
-                <div className="img-gift">
-                  <img
-                    src="	https://hyt.r.worldssl.net/hinh-hoa-tuoi/thumb/banh-kem-tous-les-jours/8437_fruity-fresh-cream-2.jpg"
-                    alt="bear"
-                  />
-                </div>
-                <div className="cost-name">
-                  <div className="gift-name">
-                    <a href="/#">Teddy áo nón vàng</a>
-                  </div>
-                  <div className="gift-cost">
-                    <span>220.000 đ</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-12 col-md-6 col-lg-4 col-xl-2">
-              <div className="box-item">
-                <div className="img-gift">
-                  <img
-                    src="https://hyt.r.worldssl.net/hinh-hoa-tuoi/thumb/trai-cay/3747_fresh-fruit-7.jpg"
-                    alt="bear"
-                  />
-                </div>
-                <div className="cost-name">
-                  <div className="gift-name">
-                    <a href="/#">Teddy áo nón vàng</a>
-                  </div>
-                  <div className="gift-cost">
-                    <span>220.000 đ</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="container tree">
-          <div className="tree-title">
-            <h2>CÂY TÌNH YÊU</h2>
-          </div>
-          <div className="tree-title__link">
-            <a href="/#">Lan hồ điệp</a>
-            <a href="/#">Cây văn phòng</a>
-            <a href="/#">Cây thủy sinh</a>
-            <a href="/#">Cây để bàn</a>
-            <a href="/#">Cây may mắn</a>
+              )
+            })}
           </div>
         </div>
       </section>
-
     </>
   )
 }

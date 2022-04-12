@@ -1,14 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { addBlog, deleteBlog, detailBlog, editBlog, getBlog } from '../services/blog.service';
-import { addTag, deleteTag, editTag, getTag } from '../services/tag.service';
+import { addTest } from '../services/test.service';
 
 const initialState = {
     data: null,
     error: null
 };
 
-export const tagSlice = createSlice({
-    name: 'tag',
+export const testSlice = createSlice({
+    name: 'test',
     initialState,
     reducers: {
         setData: (state, action) => {
@@ -23,25 +23,23 @@ export const tagSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setData, setError } = tagSlice.actions;
+export const { setData, setError } = testSlice.actions;
 
 // Define a thunk that dispatches those action creators
-export const getTagThunk = (dto) => async (dispatch) => {
+export const getBlogThunk = (dto) => async (dispatch) => {
 
     try {
-        const data = await getTag(dto);
+        const data = await getBlog(dto);
         dispatch(setData(data))
-        return data;
     } catch (err) {
         dispatch(setError(err))
     }
     //done
 }
 
-export const addTagThunk = (data) => async (dispatch) => {
+export const addTestThunk = (data) => async (dispatch) => {
     try {
-        let response = await addTag(data);
-        getTagThunk();
+        let response = await addTest(data);
         return response;
     } catch (error) {
         console.log(error)
@@ -50,30 +48,30 @@ export const addTagThunk = (data) => async (dispatch) => {
 
 
 
-export const editTagThunk = (tagId, data) => async (dispatch) => {
+export const editBlogThunk = (blogId, data) => async (dispatch) => {
     try {
-        let response = await editTag(tagId, data);
-        // getTagThunk()
+        let response = await editBlog(blogId, data);
+        getBlogThunk()
         return response;
     } catch (error) {
         console.log(error)
     }
 }
 
-// export const detailBlogThunk = (data) => async () => {
-//     try {
-//         let response = await detailBlog(data);
-//         return response
-//     } catch (error) {
-//         console.log(error)
-//     }
-// }
-export const deleteTagThunk = (data) => async () => {
+export const detailBlogThunk = (data) => async () => {
     try {
-        let response = await deleteTag(data);
+        let response = await detailBlog(data);
         return response
     } catch (error) {
         console.log(error)
     }
 }
-export default tagSlice.reducer
+export const deleteBlogThunk = (data) => async () => {
+    try {
+        let response = await deleteBlog(data);
+        return response
+    } catch (error) {
+        console.log(error)
+    }
+}
+export default testSlice.reducer

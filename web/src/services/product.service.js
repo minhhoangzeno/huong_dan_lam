@@ -5,6 +5,23 @@ export const getProduct = async () => {
     return response
 };
 
+export const getProductByCategory = async (dto) => {
+    let response = await publicGetApi(`/product/${dto}`)
+    return response
+};
+
+
+
+export const getProductById = async (dto) => {
+    let response = await publicGetApi(`/product/detail/${dto}`)
+    return response
+};
+
+export const getProductByTag = async (dto) => {
+    let response = await publicGetApi(`/product/tag/${dto}`)
+    return response
+};
+
 export const addProduct = async (data) => {
     let response = await privatePostApi('/product/create', data)
     return response

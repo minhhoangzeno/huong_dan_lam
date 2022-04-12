@@ -83,6 +83,7 @@ export default () => {
                                         <th className="border-bottom">#</th>
                                         <th className="border-bottom">Title</th>
                                         <th className="border-bottom">Giá</th>
+                                        <th className="border-bottom">Tag</th>
                                         <th className="border-bottom">Image</th>
                                         <th className="border-bottom">Settings</th>
                                     </tr>
@@ -115,6 +116,7 @@ function TableItem({ index, product, routerEditProduct, deleteProduct, routerDet
                 </td>
                 <td>{product.title}</td>
                 <td>{product.price}</td>
+                <td>{product.tag.title}</td>
                 <td>
                     <img src={`${SERVER.URL_IMAGE}${product.photoURL}`} alt="" width={70} />
                 </td>
