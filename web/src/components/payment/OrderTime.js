@@ -11,6 +11,7 @@ export default ({ time, setTime }) => {
             onChange={e => setTime({
               ...time,
               year: e.target.value
+              
             })}
           >
             <option value={"2022"} >2022</option>
