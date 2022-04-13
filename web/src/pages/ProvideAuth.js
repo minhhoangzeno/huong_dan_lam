@@ -38,6 +38,8 @@ import Tooltips from "./components/Tooltips";
 import CountdownAdd from "./countdown/CountdownAdd";
 import CountdownEdit from "./countdown/CountdownEdit";
 import ChangePassword from "./examples/ChangePassword";
+import Order from "./order/Order";
+import OrderDetail from "./order/OrderDetail";
 import Product from "./product/Product";
 import ProductAdd from "./product/ProductAdd";
 import ProductEdit from "./product/ProductEdit";
@@ -148,6 +150,9 @@ export default function ProvideAuth() {
             <Route exact path={Routes.VoteUser.path} component={HistoryUserVote} />
 
             <Route exact path={Routes.ProductTagPage.path} component={ProductTagPage} />
+
+            <Route exact path={Routes.Order.path} component={Order} />
+            <Route exact path={Routes.OrderDetail.path} component={OrderDetail} />
 
 
             <Redirect from="/" to="/" />

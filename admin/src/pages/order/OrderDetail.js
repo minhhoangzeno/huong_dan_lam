@@ -111,7 +111,11 @@ export default () => {
                                         <tr key={index} >
                                             <th>{index + 1}</th>
                                             <th>{item?.product?.title}</th>
-                                            <th><img alt='' src={`${SERVER.URL_IMAGE}${item?.product?.photoURL}`}  /></th>
+                                            <th><img alt='' src={`${SERVER.URL_IMAGE}${item?.product?.photoURL}`}
+                                                width={150}
+                                                height={50}
+                                                style={{ margin: 10 }}
+                                            /></th>
                                             <th>{item?.amount}</th>
                                             <th>{item?.price}</th>
                                         </tr>

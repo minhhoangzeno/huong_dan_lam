@@ -52,73 +52,85 @@ let OrderService = class OrderService {
             createdAt: {
                 $gte: new Date(year, 0, 1),
                 $lt: new Date(year, 0, 31)
-            }
+            },
+            status: "Thành công"
         });
         let monthFeburary = await this.orderModel.find({
             createdAt: {
                 $gte: new Date(year, 1, 1),
                 $lt: new Date(year, 1, dayOfFeburary)
-            }
+            },
+            status: "Thành công"
         });
         let monthMatch = await this.orderModel.find({
             createdAt: {
                 $gte: new Date(year, 2, 1),
                 $lt: new Date(year, 2, 31)
-            }
+            },
+            status: "Thành công"
         });
         let monthApril = await this.orderModel.find({
             createdAt: {
                 $gte: new Date(year, 3, 1),
                 $lt: new Date(year, 3, 30)
-            }
+            },
+            status: "Thành công"
         });
         let monthMay = await this.orderModel.find({
             createdAt: {
                 $gte: new Date(year, 4, 1),
                 $lt: new Date(year, 4, 31)
-            }
+            },
+            status: "Thành công"
         });
         let monthJune = await this.orderModel.find({
             createdAt: {
                 $gte: new Date(year, 5, 1),
                 $lt: new Date(year, 5, 30)
-            }
+            },
+            status: "Thành công"
         });
         let monthJuly = await this.orderModel.find({
             createdAt: {
                 $gte: new Date(year, 6, 1),
                 $lt: new Date(year, 6, 31)
-            }
+            },
+            status: "Thành công"
         });
         let monthAugust = await this.orderModel.find({
             createdAt: {
                 $gte: new Date(year, 7, 1),
                 $lt: new Date(year, 7, 31)
-            }
+            },
+            status: "Thành công"
         });
         let monthSeptember = await this.orderModel.find({
             createdAt: {
                 $gte: new Date(year, 8, 1),
                 $lt: new Date(year, 8, 30)
-            }
+            },
+            status: "Thành công"
         });
         let monthOctober = await this.orderModel.find({
             createdAt: {
                 $gte: new Date(year, 9, 1),
                 $lt: new Date(year, 9, 31)
-            }
+            },
+            status: "Thành công"
         });
         let monthNovember = await this.orderModel.find({
             createdAt: {
                 $gte: new Date(year, 10, 1),
                 $lt: new Date(year, 10, 30)
-            }
+            },
+            status: "Thành công"
         });
         let monthDecember = await this.orderModel.find({
             createdAt: {
                 $gte: new Date(year, 11, 1),
                 $lt: new Date(year, 11, 31)
-            }
+            },
+            status: "Thành công"
         });
         resp.push([
             {
@@ -185,7 +197,8 @@ let OrderService = class OrderService {
             createdAt: {
                 $gte: new Date(year, 0, 1),
                 $lt: new Date(year, 0, 31)
-            }
+            },
+            status: "Thành công"
         }).exec().then(result => {
             let total = 0;
             result.forEach(item => total += item.totalPrice.valueOf());
@@ -195,7 +208,8 @@ let OrderService = class OrderService {
             createdAt: {
                 $gte: new Date(year, 1, 1),
                 $lt: new Date(year, 1, dayOfFeburary)
-            }
+            },
+            status: "Thành công"
         }).exec().then(result => {
             let total = 0;
             result.forEach(item => total += item.totalPrice.valueOf());
@@ -205,7 +219,8 @@ let OrderService = class OrderService {
             createdAt: {
                 $gte: new Date(year, 2, 1),
                 $lt: new Date(year, 2, 31)
-            }
+            },
+            status: "Thành công"
         }).exec().then(result => {
             let total = 0;
             result.forEach(item => total += item.totalPrice.valueOf());
@@ -215,7 +230,8 @@ let OrderService = class OrderService {
             createdAt: {
                 $gte: new Date(year, 3, 1),
                 $lt: new Date(year, 3, 30)
-            }
+            },
+            status: "Thành công"
         }).exec().then(result => {
             let total = 0;
             result.forEach(item => total += item.totalPrice.valueOf());
@@ -225,7 +241,8 @@ let OrderService = class OrderService {
             createdAt: {
                 $gte: new Date(year, 4, 1),
                 $lt: new Date(year, 4, 31)
-            }
+            },
+            status: "Thành công"
         }).exec().then(result => {
             let total = 0;
             result.forEach(item => total += item.totalPrice.valueOf());
@@ -235,7 +252,8 @@ let OrderService = class OrderService {
             createdAt: {
                 $gte: new Date(year, 5, 1),
                 $lt: new Date(year, 5, 30)
-            }
+            },
+            status: "Thành công"
         }).exec().then(result => {
             let total = 0;
             result.forEach(item => total += item.totalPrice.valueOf());
@@ -245,7 +263,8 @@ let OrderService = class OrderService {
             createdAt: {
                 $gte: new Date(year, 6, 1),
                 $lt: new Date(year, 6, 31)
-            }
+            },
+            status: "Thành công"
         }).exec().then(result => {
             let total = 0;
             result.forEach(item => total += item.totalPrice.valueOf());
@@ -255,7 +274,8 @@ let OrderService = class OrderService {
             createdAt: {
                 $gte: new Date(year, 7, 1),
                 $lt: new Date(year, 7, 31)
-            }
+            },
+            status: "Thành công"
         }).exec().then(result => {
             let total = 0;
             result.forEach(item => total += item.totalPrice.valueOf());
@@ -265,7 +285,8 @@ let OrderService = class OrderService {
             createdAt: {
                 $gte: new Date(year, 8, 1),
                 $lt: new Date(year, 8, 30)
-            }
+            },
+            status: "Thành công"
         }).exec().then(result => {
             let total = 0;
             result.forEach(item => total += item.totalPrice.valueOf());
@@ -275,7 +296,8 @@ let OrderService = class OrderService {
             createdAt: {
                 $gte: new Date(year, 9, 1),
                 $lt: new Date(year, 9, 31)
-            }
+            },
+            status: "Thành công"
         }).exec().then(result => {
             let total = 0;
             result.forEach(item => total += item.totalPrice.valueOf());
@@ -285,7 +307,8 @@ let OrderService = class OrderService {
             createdAt: {
                 $gte: new Date(year, 10, 1),
                 $lt: new Date(year, 10, 30)
-            }
+            },
+            status: "Thành công"
         }).exec().then(result => {
             let total = 0;
             result.forEach(item => total += item.totalPrice.valueOf());
@@ -295,7 +318,8 @@ let OrderService = class OrderService {
             createdAt: {
                 $gte: new Date(year, 11, 1),
                 $lt: new Date(year, 11, 31)
-            }
+            },
+            status: "Thành công"
         }).exec().then(result => {
             let total = 0;
             result.forEach(item => total += item.totalPrice.valueOf());
@@ -354,7 +378,16 @@ let OrderService = class OrderService {
         return resp;
     }
     async findByUser(user) {
-        return this.orderModel.find({ createdBy: user });
+        return this.orderModel.find({ createdBy: user }).populate({
+            path: "orderProducts",
+            select: "amount price",
+            model: "OrderProduct",
+            populate: {
+                path: "product",
+                select: "title photoURL",
+                model: "Product"
+            }
+        });
     }
     async create(orderDto, orderProductDto, user) {
         let order = new this.orderModel(Object.assign({}, orderDto));

@@ -1,13 +1,18 @@
-import { privateDeleteApi, privatePostApi, publicGetApi } from "../apis/API";
+import { privateDeleteApi, privateGetApi, privatePostApi, publicGetApi } from "../apis/API";
 
-// export const getBlog = async (dto) => {
-//     let response = await publicGetApi(`/blog/${dto}`)
-//     return response
-// };
-
+export const getOrderByUser = async () => {
+  let response = await privateGetApi(`/order/user`)
+  return response
+};
 export const addOrder = async (data) => {
     let response = await privatePostApi('/order/create', data)
     return response
+};
+
+
+export const deleteOrder = async (data) => {
+  let response = await privateDeleteApi(`/order/delete/${data}`)
+  return response
 };
 
 // export const editBlog = async (blogId, data) => {

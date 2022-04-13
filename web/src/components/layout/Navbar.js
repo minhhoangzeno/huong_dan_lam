@@ -31,8 +31,15 @@ export default () => {
                 <CategoryItem key={index} category={item} />
               )
             })}
-            <li className="navbar-item meaningful">
-              <div className="meaningful padding">Ý nghĩa hoa</div>
+            <li className="navbar-item meaningful"
+              style={{
+                cursor:'pointer'
+              }}
+              onClick={() => {
+                history.push(Routes.Order.path)
+              }}
+            >
+              <div className="meaningful padding">Đơn hàng của tôi</div>
             </li>
           </ul>
         </div>

@@ -74,5 +74,7 @@ export const Routes = {
 
     ProductTagPage: { path: "/tag" },
 
+    Order: { path: "/my-order" },
+    OrderDetail: { path: "/my-order/detail" },
 
 };

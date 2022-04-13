@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addOrder } from '../services/order.service';
+import { addOrder, deleteOrder, getOrderByUser } from '../services/order.service';
 
 const initialState = {
     data: null,
@@ -25,18 +25,16 @@ export const orderSlice = createSlice({
 export const { setData, setError } = orderSlice.actions;
 
 // Define a thunk that dispatches those action creators
-// export const getBlogThunk = (dto) => async (dispatch) => {
 
-//     try {
-//         const data = await getBlog(dto);
-//         dispatch(setData(data))
-//         return data;
-//     } catch (err) {
-//         dispatch(setError(err))
-//     }
-//     //done
-// }
-
+export const getOrderByUserThunk = () => async (dispatch) => {
+  try {
+      const data = await getOrderByUser();
+      return data;
+  } catch (err) {
+      dispatch(setError(err))
+  }
+  //done
+}
 export const addOrderThunk = (data) => async (dispatch) => {
     try {
         let response = await addOrder(data);
@@ -47,6 +45,15 @@ export const addOrderThunk = (data) => async (dispatch) => {
     }
 }
 
+
+export const deleteOrderThunk = (data) => async () => {
+  try {
+      let response = await deleteOrder(data);
+      return response
+  } catch (error) {
+      console.log(error)
+  }
+}
 
 
 // export const editBlogThunk = (blogId, data) => async (dispatch) => {

@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../../scss/style.scss';
+import Feedback from './Feedback';
 export default () => {
-
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
     return (
         <>
+            <Feedback show={show} handleClose={handleClose} />
+
             <section className="footer">
                 <div className="container">
                     <ul className="address">
@@ -181,8 +185,14 @@ export default () => {
                                 từ:
                                 <strong>Logi.com</strong>
                             </p>
-                            <input type="text" placeholder="Email của bạn" />
-                            <input className="input-submit" type="submit" defaultValue="OK" />
+                            <div style={{
+                                width: 100, height: 50, background: '#395012',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', cursor: 'pointer'
+                            }}
+                                onClick={() => setShow(true)}
+                            >
+                                Phản hồi
+                            </div>
                         </li>
                         <li className="service-shop">
                             <strong>
